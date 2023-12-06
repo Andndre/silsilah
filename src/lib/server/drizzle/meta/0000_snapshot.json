@@ -1,0 +1,320 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "821fe6b7-5a52-437f-bec0-203329128287",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "agama": {
+      "name": "agama",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nama": {
+          "name": "nama",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "agama_id": {
+          "name": "agama_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "akun": {
+      "name": "akun",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nik_keluarga": {
+          "name": "nik_keluarga",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "akun_nik_keluarga_keluarga_nik_keluarga_fk": {
+          "name": "akun_nik_keluarga_keluarga_nik_keluarga_fk",
+          "tableFrom": "akun",
+          "tableTo": "keluarga",
+          "columnsFrom": [
+            "nik_keluarga"
+          ],
+          "columnsTo": [
+            "nik_keluarga"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "akun_id": {
+          "name": "akun_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "anggota_keluarga": {
+      "name": "anggota_keluarga",
+      "columns": {
+        "nik_identifier": {
+          "name": "nik_identifier",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nik_keluarga": {
+          "name": "nik_keluarga",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nama": {
+          "name": "nama",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "status_dalam_keluarga": {
+          "name": "status_dalam_keluarga",
+          "type": "enum('suami','istri','anak')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tanggal_lahir": {
+          "name": "tanggal_lahir",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tanggal_meninggal": {
+          "name": "tanggal_meninggal",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "anggota_keluarga_nik_keluarga_keluarga_nik_keluarga_fk": {
+          "name": "anggota_keluarga_nik_keluarga_keluarga_nik_keluarga_fk",
+          "tableFrom": "anggota_keluarga",
+          "tableTo": "keluarga",
+          "columnsFrom": [
+            "nik_keluarga"
+          ],
+          "columnsTo": [
+            "nik_keluarga"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "anggota_keluarga_nik_identifier": {
+          "name": "anggota_keluarga_nik_identifier",
+          "columns": [
+            "nik_identifier"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "keluarga": {
+      "name": "keluarga",
+      "columns": {
+        "nik_keluarga": {
+          "name": "nik_keluarga",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "id_marga": {
+          "name": "id_marga",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "keluarga_nik_keluarga": {
+          "name": "keluarga_nik_keluarga",
+          "columns": [
+            "nik_keluarga"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "marga": {
+      "name": "marga",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "nama": {
+          "name": "nama",
+          "type": "varchar(75)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "keterangan": {
+          "name": "keterangan",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "id_agama": {
+          "name": "id_agama",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "marga_id_agama_agama_id_fk": {
+          "name": "marga_id_agama_agama_id_fk",
+          "tableFrom": "marga",
+          "tableTo": "agama",
+          "columnsFrom": [
+            "id_agama"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "marga_id": {
+          "name": "marga_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    },
+    "pencapaian": {
+      "name": "pencapaian",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "judul": {
+          "name": "judul",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "nik_identifier": {
+          "name": "nik_identifier",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "deskripsi": {
+          "name": "deskripsi",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tahun": {
+          "name": "tahun",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tahun_akhir": {
+          "name": "tahun_akhir",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "pencapaian_nik_identifier_anggota_keluarga_nik_identifier_fk": {
+          "name": "pencapaian_nik_identifier_anggota_keluarga_nik_identifier_fk",
+          "tableFrom": "pencapaian",
+          "tableTo": "anggota_keluarga",
+          "columnsFrom": [
+            "nik_identifier"
+          ],
+          "columnsTo": [
+            "nik_identifier"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "pencapaian_id": {
+          "name": "pencapaian_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {}
+    }
+  },
+  "schemas": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  }
+}
