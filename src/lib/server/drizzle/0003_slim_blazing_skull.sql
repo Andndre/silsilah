@@ -1,0 +1,1 @@
+ALTER TABLE `marga` MODIFY COLUMN `id` varchar(256) NOT NULL;
