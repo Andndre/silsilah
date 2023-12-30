@@ -1,5 +1,5 @@
 import type { PageServerLoad, Actions } from './$types';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import { superValidate } from 'sveltekit-superforms/server';
 import { formSchema } from './schema';
 import { db } from '$lib/server/database';
@@ -97,7 +97,7 @@ export const actions: Actions = {
 					secure: true
 				});
 			});
-			return Response.redirect('/', 302);
+			throw redirect(302, '/');
 		} catch (err) {
 			console.log(err);
 			return fail(500, {
