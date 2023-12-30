@@ -1,12 +1,19 @@
 {
 	"version": "5",
 	"dialect": "mysql",
-	"id": "6e55fc22-95e5-4a26-9b3d-e30a56896738",
-	"prevId": "821fe6b7-5a52-437f-bec0-203329128287",
+	"id": "cbe98ed7-069b-4f8b-b5b1-5883fc603da8",
+	"prevId": "bfdd7b7c-5ea2-451f-b1f2-2ad8523272dd",
 	"tables": {
 		"agama": {
 			"name": "agama",
 			"columns": {
+				"id": {
+					"name": "id",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": true
+				},
 				"nama": {
 					"name": "nama",
 					"type": "varchar(10)",
@@ -18,15 +25,15 @@
 			"indexes": {},
 			"foreignKeys": {},
 			"compositePrimaryKeys": {
-				"agama_nama": {
-					"name": "agama_nama",
-					"columns": ["nama"]
+				"agama_id": {
+					"name": "agama_id",
+					"columns": ["id"]
 				}
 			},
 			"uniqueConstraints": {}
 		},
-		"akun": {
-			"name": "akun",
+		"anggota": {
+			"name": "anggota",
 			"columns": {
 				"id": {
 					"name": "id",
@@ -35,77 +42,23 @@
 					"notNull": true,
 					"autoincrement": true
 				},
-				"no_kk": {
-					"name": "no_kk",
-					"type": "varchar(256)",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"turunan_dari": {
-					"name": "turunan_dari",
-					"type": "varchar(256)",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"akun_no_kk_keluarga_no_kk_fk": {
-					"name": "akun_no_kk_keluarga_no_kk_fk",
-					"tableFrom": "akun",
-					"tableTo": "keluarga",
-					"columnsFrom": ["no_kk"],
-					"columnsTo": ["no_kk"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"akun_turunan_dari_keluarga_no_kk_fk": {
-					"name": "akun_turunan_dari_keluarga_no_kk_fk",
-					"tableFrom": "akun",
-					"tableTo": "keluarga",
-					"columnsFrom": ["turunan_dari"],
-					"columnsTo": ["no_kk"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {
-				"akun_id": {
-					"name": "akun_id",
-					"columns": ["id"]
-				}
-			},
-			"uniqueConstraints": {}
-		},
-		"anggota_keluarga": {
-			"name": "anggota_keluarga",
-			"columns": {
-				"nik_identifier": {
-					"name": "nik_identifier",
-					"type": "varchar(256)",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"no_kk": {
-					"name": "no_kk",
-					"type": "varchar(256)",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"nama": {
-					"name": "nama",
+				"nama_lengkap": {
+					"name": "nama_lengkap",
 					"type": "varchar(100)",
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": false
 				},
-				"status": {
-					"name": "status",
-					"type": "enum('suami','istri','anak')",
+				"jenis_kelamin": {
+					"name": "jenis_kelamin",
+					"type": "enum('L','P')",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"tempat_lahir": {
+					"name": "tempat_lahir",
+					"type": "varchar(100)",
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": false
@@ -126,9 +79,75 @@
 				},
 				"agama": {
 					"name": "agama",
-					"type": "varchar(10)",
+					"type": "int",
 					"primaryKey": false,
 					"notNull": true,
+					"autoincrement": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"anggota_agama_agama_id_fk": {
+					"name": "anggota_agama_agama_id_fk",
+					"tableFrom": "anggota",
+					"tableTo": "agama",
+					"columnsFrom": ["agama"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {
+				"anggota_id": {
+					"name": "anggota_id",
+					"columns": ["id"]
+				}
+			},
+			"uniqueConstraints": {}
+		},
+		"cerita": {
+			"name": "cerita",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": true
+				},
+				"judul": {
+					"name": "judul",
+					"type": "varchar(100)",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"id_anggota": {
+					"name": "id_anggota",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"deskripsi": {
+					"name": "deskripsi",
+					"type": "text",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"tahun": {
+					"name": "tahun",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"tahun_akhir": {
+					"name": "tahun_akhir",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": false,
 					"autoincrement": false
 				},
 				"gambar": {
@@ -141,29 +160,65 @@
 			},
 			"indexes": {},
 			"foreignKeys": {
-				"anggota_keluarga_no_kk_keluarga_no_kk_fk": {
-					"name": "anggota_keluarga_no_kk_keluarga_no_kk_fk",
-					"tableFrom": "anggota_keluarga",
-					"tableTo": "keluarga",
-					"columnsFrom": ["no_kk"],
-					"columnsTo": ["no_kk"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				},
-				"anggota_keluarga_agama_agama_nama_fk": {
-					"name": "anggota_keluarga_agama_agama_nama_fk",
-					"tableFrom": "anggota_keluarga",
-					"tableTo": "agama",
-					"columnsFrom": ["agama"],
-					"columnsTo": ["nama"],
-					"onDelete": "no action",
+				"cerita_id_anggota_anggota_id_fk": {
+					"name": "cerita_id_anggota_anggota_id_fk",
+					"tableFrom": "cerita",
+					"tableTo": "anggota",
+					"columnsFrom": ["id_anggota"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
 					"onUpdate": "no action"
 				}
 			},
 			"compositePrimaryKeys": {
-				"anggota_keluarga_nik_identifier": {
-					"name": "anggota_keluarga_nik_identifier",
-					"columns": ["nik_identifier"]
+				"cerita_id": {
+					"name": "cerita_id",
+					"columns": ["id"]
+				}
+			},
+			"uniqueConstraints": {}
+		},
+		"gambar_cerita": {
+			"name": "gambar_cerita",
+			"columns": {
+				"id": {
+					"name": "id",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": true
+				},
+				"cerita": {
+					"name": "cerita",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"gambar": {
+					"name": "gambar",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				}
+			},
+			"indexes": {},
+			"foreignKeys": {
+				"gambar_cerita_cerita_cerita_id_fk": {
+					"name": "gambar_cerita_cerita_cerita_id_fk",
+					"tableFrom": "gambar_cerita",
+					"tableTo": "cerita",
+					"columnsFrom": ["cerita"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
+			"compositePrimaryKeys": {
+				"gambar_cerita_id": {
+					"name": "gambar_cerita_id",
+					"columns": ["id"]
 				}
 			},
 			"uniqueConstraints": {}
@@ -171,15 +226,50 @@
 		"keluarga": {
 			"name": "keluarga",
 			"columns": {
-				"no_kk": {
-					"name": "no_kk",
+				"id": {
+					"name": "id",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": true
+				},
+				"suami": {
+					"name": "suami",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"istri": {
+					"name": "istri",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"alamat": {
+					"name": "alamat",
 					"type": "varchar(256)",
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": false
 				},
-				"id_marga": {
-					"name": "id_marga",
+				"tanggal_menikah": {
+					"name": "tanggal_menikah",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"password": {
+					"name": "password",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
+				"marga": {
+					"name": "marga",
 					"type": "int",
 					"primaryKey": false,
 					"notNull": true,
@@ -187,11 +277,39 @@
 				}
 			},
 			"indexes": {},
-			"foreignKeys": {},
+			"foreignKeys": {
+				"keluarga_suami_anggota_id_fk": {
+					"name": "keluarga_suami_anggota_id_fk",
+					"tableFrom": "keluarga",
+					"tableTo": "anggota",
+					"columnsFrom": ["suami"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				},
+				"keluarga_istri_anggota_id_fk": {
+					"name": "keluarga_istri_anggota_id_fk",
+					"tableFrom": "keluarga",
+					"tableTo": "anggota",
+					"columnsFrom": ["istri"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				},
+				"keluarga_marga_marga_id_fk": {
+					"name": "keluarga_marga_marga_id_fk",
+					"tableFrom": "keluarga",
+					"tableTo": "marga",
+					"columnsFrom": ["marga"],
+					"columnsTo": ["id"],
+					"onDelete": "cascade",
+					"onUpdate": "no action"
+				}
+			},
 			"compositePrimaryKeys": {
-				"keluarga_no_kk": {
-					"name": "keluarga_no_kk",
-					"columns": ["no_kk"]
+				"keluarga_id": {
+					"name": "keluarga_id",
+					"columns": ["id"]
 				}
 			},
 			"uniqueConstraints": {}
@@ -230,90 +348,12 @@
 				}
 			},
 			"uniqueConstraints": {}
-		},
-		"pencapaian": {
-			"name": "pencapaian",
-			"columns": {
-				"id": {
-					"name": "id",
-					"type": "int",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"judul": {
-					"name": "judul",
-					"type": "varchar(100)",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"nik_identifier": {
-					"name": "nik_identifier",
-					"type": "varchar(255)",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"deskripsi": {
-					"name": "deskripsi",
-					"type": "text",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"tahun": {
-					"name": "tahun",
-					"type": "int",
-					"primaryKey": false,
-					"notNull": true,
-					"autoincrement": false
-				},
-				"tahun_akhir": {
-					"name": "tahun_akhir",
-					"type": "int",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				},
-				"gambar": {
-					"name": "gambar",
-					"type": "varchar(256)",
-					"primaryKey": false,
-					"notNull": false,
-					"autoincrement": false
-				}
-			},
-			"indexes": {},
-			"foreignKeys": {
-				"pencapaian_nik_identifier_anggota_keluarga_nik_identifier_fk": {
-					"name": "pencapaian_nik_identifier_anggota_keluarga_nik_identifier_fk",
-					"tableFrom": "pencapaian",
-					"tableTo": "anggota_keluarga",
-					"columnsFrom": ["nik_identifier"],
-					"columnsTo": ["nik_identifier"],
-					"onDelete": "no action",
-					"onUpdate": "no action"
-				}
-			},
-			"compositePrimaryKeys": {
-				"pencapaian_id": {
-					"name": "pencapaian_id",
-					"columns": ["id"]
-				}
-			},
-			"uniqueConstraints": {}
 		}
 	},
 	"schemas": {},
 	"_meta": {
 		"schemas": {},
 		"tables": {},
-		"columns": {
-			"\"akun\".\"nik_keluarga\"": "\"akun\".\"no_kk\"",
-			"\"anggota_keluarga\".\"nik_keluarga\"": "\"anggota_keluarga\".\"no_kk\"",
-			"\"anggota_keluarga\".\"status_dalam_keluarga\"": "\"anggota_keluarga\".\"status\"",
-			"\"keluarga\".\"nik_keluarga\"": "\"keluarga\".\"no_kk\""
-		}
+		"columns": {}
 	}
 }

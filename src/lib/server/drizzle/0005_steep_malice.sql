@@ -1,0 +1,1 @@
+ALTER TABLE `anggota` MODIFY COLUMN `ref_key` varchar(256);
