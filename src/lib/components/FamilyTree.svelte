@@ -70,8 +70,7 @@
 			const node = d3.select(this);
 			const nodeWidth = getNodeWidth(d.data);
 
-			node
-				.append('rect')
+			node.append('rect')
 				.attr('x', -nodeWidth / 2)
 				.attr('y', -15 - textPaddingY)
 				.attr('width', nodeWidth)
@@ -79,8 +78,7 @@
 				.attr('fill', '#3498db')
 				.attr('style', 'font-family: Consolas');
 
-			node
-				.append('text')
+			node.append('text')
 				// @ts-ignore
 				.text((d) => d.data.name)
 				.attr('fill', '#fff')

@@ -16,7 +16,7 @@ export const formSchema = z.object({
 	marga: z.number({ required_error: 'Marga harus diisi' }),
 	username: z.string().min(1, 'Inputkan Username'),
 	password: z.string().min(1, 'Inputkan Password'),
-	password_konfirmasi: z.string().min(1, 'Inputkan Konfirmasi Password')
+	password_konfirmasi: z.string().min(1, 'Inputkan Konfirmasi Password'),
 });
 
 export type FormSchema = typeof formSchema;

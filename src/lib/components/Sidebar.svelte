@@ -14,7 +14,7 @@
 
 <aside
 	class={cn(
-		'fixed lg:sticky lg:top-0 w-full bottom-0 bg-card-foreground dark:bg-black dark:text-white text-card border-r shadow-xl lg:min-h-screen lg:max-w-[250px] p-4 z-[100] flex flex-col lg:h-full'
+		'fixed lg:sticky lg:top-0 w-full bottom-0 bg-card-foreground dark:bg-black dark:text-white text-card border-r shadow-xl lg:min-h-screen lg:max-w-[250px] p-4 z-[100] flex flex-col lg:h-full',
 	)}
 >
 	<div class="hidden lg:flex flex-col items-center mt-8">
@@ -31,11 +31,12 @@
 					'hover:bg-accent-foreground dark:hover:bg-accent text-accent transition-all rounded-md',
 					pathname == item.href
 						? 'dark:bg-accent text-accent dark:text-accent-foreground'
-						: 'text-muted-foreground'
+						: 'text-muted-foreground',
 				)}
 			>
 				<a class="flex items-center gap-3 lg:px-4 lg:py-2" href={item.href}>
-					<Lucideicon name={item.icon} /> <span class="hidden lg:block">{item.title}</span>
+					<Lucideicon name={item.icon} />
+					<span class="hidden lg:block">{item.title}</span>
 				</a>
 			</li>
 		{/each}

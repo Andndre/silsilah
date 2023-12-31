@@ -11,7 +11,7 @@ export async function POST({ request }) {
 	}
 	const margas = await db.insert(marga).values({
 		nama: json.nama,
-		keterangan: json.keterangan
+		keterangan: json.keterangan,
 	});
 
 	return new Response(JSON.stringify(margas), { status: 200 });

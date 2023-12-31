@@ -10,23 +10,23 @@
 		{
 			title: 'Dashboard',
 			href: '/',
-			icon: 'Home'
+			icon: 'Home',
 		},
 		{
 			title: 'Anggota Keluarga',
 			href: '/anggota-keluarga',
-			icon: 'Users'
+			icon: 'Users',
 		},
 		{
 			title: 'Data Pencapaian',
 			href: '/data-pencapaian',
-			icon: 'Trophy'
+			icon: 'Trophy',
 		},
 		{
 			title: 'Notifikasi',
 			href: '/notifikasi',
-			icon: 'Bell'
-		}
+			icon: 'Bell',
+		},
 	]}
 >
 	<slot />

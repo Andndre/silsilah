@@ -4,15 +4,15 @@ export async function GET({ setHeaders, params }) {
 	const test = await fetch(`${API_LOKASI_INDONESIA}/villages/${params.id}.json`, {
 		method: 'GET',
 		headers: {
-			'Content-Type': 'application/json'
-		}
+			'Content-Type': 'application/json',
+		},
 	});
 
 	return new Response(JSON.stringify(await test.json()), {
 		status: 200,
 		headers: {
 			'Content-Type': 'application/json',
-			'cache-control': 'public, max-age=60'
-		}
+			'cache-control': 'public, max-age=60',
+		},
 	});
 }

@@ -28,7 +28,7 @@
 		'data-[unavailable]:line-through data-[unavailable]:text-destructive-foreground',
 		// Outside months
 		'data-[outside-month]:text-muted-foreground data-[outside-month]:opacity-50 [&[data-outside-month][data-selected]]:bg-accent/50 [&[data-outside-month][data-selected]]:text-muted-foreground [&[data-outside-month][data-selected]]:opacity-30 data-[outside-month]:pointer-events-none',
-		className
+		className,
 	)}
 	{...$$restProps}
 	let:selected

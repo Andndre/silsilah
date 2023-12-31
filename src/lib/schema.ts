@@ -3,13 +3,13 @@ import { boolean, date, int, mysqlEnum, mysqlTable, text, varchar } from 'drizzl
 
 export const agama = mysqlTable('agama', {
 	id: int('id').autoincrement().notNull().primaryKey(),
-	nama: varchar('nama', { length: 10 }).notNull()
+	nama: varchar('nama', { length: 10 }).notNull(),
 });
 
 export const marga = mysqlTable('marga', {
 	id: int('id').autoincrement().notNull().primaryKey(),
 	nama: varchar('nama', { length: 75 }).notNull(),
-	keterangan: text('keterangan')
+	keterangan: text('keterangan'),
 });
 
 export const anggota = mysqlTable('anggota', {
@@ -23,7 +23,7 @@ export const anggota = mysqlTable('anggota', {
 	agama: int('agama')
 		.notNull()
 		.references(() => agama.id, { onDelete: 'cascade' }),
-	keluargaAsal: int('keluarga_asal')
+	keluargaAsal: int('keluarga_asal'),
 });
 
 export const keluarga = mysqlTable('keluarga', {
@@ -31,16 +31,18 @@ export const keluarga = mysqlTable('keluarga', {
 	username: varchar('username', { length: 256 }).unique().notNull(),
 	suami: int('suami')
 		.references(() => anggota.id, { onDelete: 'cascade' })
-		.unique().notNull(), // tidak bisa nikah 2x
+		.unique()
+		.notNull(), // tidak bisa nikah 2x
 	istri: int('istri')
 		.references(() => anggota.id, { onDelete: 'cascade' })
-		.unique().notNull(), // tidak bisa nikah 2x
+		.unique()
+		.notNull(), // tidak bisa nikah 2x
 	alamat: varchar('alamat', { length: 256 }).notNull(), // format: provinsi;kabupaten;kecamatan;kelurahan
 	tanggal_menikah: date('tanggal_menikah', { mode: 'date' }).notNull(),
 	password: varchar('password', { length: 256 }).notNull(),
 	marga: int('marga')
 		.notNull()
-		.references(() => marga.id, { onDelete: 'cascade' })
+		.references(() => marga.id, { onDelete: 'cascade' }),
 });
 
 export const cerita = mysqlTable('cerita', {
@@ -52,7 +54,7 @@ export const cerita = mysqlTable('cerita', {
 	deskripsi: text('deskripsi').notNull(),
 	tahun: int('tahun').notNull(),
 	tahunAkhir: int('tahun_akhir'),
-	gambar: varchar('gambar', { length: 256 })
+	gambar: varchar('gambar', { length: 256 }),
 });
 
 export const gambarCerita = mysqlTable('gambar_cerita', {
@@ -60,12 +62,12 @@ export const gambarCerita = mysqlTable('gambar_cerita', {
 	cerita: int('cerita')
 		.notNull()
 		.references(() => cerita.id, { onDelete: 'cascade' }),
-	gambar: varchar('gambar', { length: 256 }).notNull()
+	gambar: varchar('gambar', { length: 256 }).notNull(),
 });
 
 export const keluargaAnggota = relations(anggota, ({ one }) => ({
 	keluargaAnggota: one(keluarga, {
 		fields: [anggota.keluargaAsal],
-		references: [keluarga.id]
-	})
+		references: [keluarga.id],
+	}),
 }));
