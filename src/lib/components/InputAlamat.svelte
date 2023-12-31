@@ -40,7 +40,9 @@
 		const res = await fetch('/api/lokasi/provinsi');
 		searching = false;
 		if (res.ok) {
-			allProvinces = (await res.json()) as DataLokasi[];
+			allProvinces = ((await res.json()) as DataLokasi[]).toSorted((a, b) =>
+				a.name.localeCompare(b.name),
+			);
 		}
 	}
 
@@ -52,7 +54,9 @@
 		const res = await fetch(`/api/lokasi/kabupaten/${provinsiId}`);
 		searching = false;
 		if (res.ok) {
-			allKabupaten = (await res.json()) as DataLokasi[];
+			allKabupaten = ((await res.json()) as DataLokasi[]).toSorted((a, b) =>
+				a.name.localeCompare(b.name),
+			);
 		}
 	}
 
@@ -64,7 +68,9 @@
 		const res = await fetch(`/api/lokasi/kecamatan/${kabupatenId}`);
 		searching = false;
 		if (res.ok) {
-			allKecamatan = (await res.json()) as DataLokasi[];
+			allKecamatan = ((await res.json()) as DataLokasi[]).toSorted((a, b) =>
+				a.name.localeCompare(b.name),
+			);
 		}
 	}
 
@@ -76,7 +82,9 @@
 		const res = await fetch(`/api/lokasi/kelurahan/${kecamatanId}`);
 		searching = false;
 		if (res.ok) {
-			allKelurahan = (await res.json()) as DataLokasi[];
+			allKelurahan = ((await res.json()) as DataLokasi[]).toSorted((a, b) =>
+				a.name.localeCompare(b.name),
+			);
 		}
 	}
 
@@ -218,6 +226,7 @@
 			name="kelurahan"
 			bind:value={kelurahan}
 			on:focus={() => (focus = true)}
+			on:blur={() => (setTimeout(() => { focus = false }, 500))}
 		/>
 		{#if allKelurahan.length > 0 && focus}
 			<ul class="absolute w-full bg-background border rounded-md overflow-hidden z-[9999]">
@@ -231,7 +240,7 @@
 										kelurahan = kel.name;
 										kelurahanId = kel.id;
 										alamat = `${provinsiId};${kabupatenId};${kecamatanId};${kelurahanId}`;
-										allKelurahan = [];
+										focus = false;
 									}}
 								>
 									{kel.name}
