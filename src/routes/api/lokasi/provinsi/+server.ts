@@ -1,6 +1,6 @@
 import { API_LOKASI_INDONESIA } from '$env/static/private';
 
-export async function GET({ setHeaders }) {
+export async function GET() {
 	const test = await fetch(`${API_LOKASI_INDONESIA}/provinces.json`, {
 		method: 'GET',
 		headers: {

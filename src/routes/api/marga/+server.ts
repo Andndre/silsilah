@@ -1,8 +1,6 @@
 import { marga } from '$lib/schema.js';
 import { db } from '$lib/server/database.js';
 import { error } from '@sveltejs/kit';
-import { eq, like } from 'drizzle-orm';
-import { v4 } from 'uuid';
 
 export async function POST({ request }) {
 	const json = await request.json();
