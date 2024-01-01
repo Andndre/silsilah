@@ -4,19 +4,18 @@
 	import type { NavItem } from '$lib/types';
 	import { afterNavigate } from '$app/navigation';
 	import { onMount } from 'svelte';
-	
+
 	let pathname: string;
 
 	afterNavigate(() => {
-		pathname = window.location.pathname
-	})
+		pathname = window.location.pathname;
+	});
 
 	onMount(() => {
-		pathname = window.location.pathname
-	})
+		pathname = window.location.pathname;
+	});
 
 	export let sidebarNavItems: NavItem[];
-
 </script>
 
 <aside

@@ -20,10 +20,9 @@
 	});
 
 	const { form: formStore } = theForm;
-
 </script>
 
- <!-- <SuperDebug data={$formStore} /> -->
+<!-- <SuperDebug data={$formStore} /> -->
 
 <Form.Root method="POST" controlled form={theForm} schema={formSchema} let:config class="space-y-3">
 	<Form.Field {config} name="name">
@@ -39,12 +38,8 @@
 			<Form.Select>
 				<Form.SelectTrigger placeholder="Jenis Kelamin" />
 				<Form.SelectContent>
-					<Form.SelectItem value="L"
-						>Laki Laki</Form.SelectItem
-					>
-					<Form.SelectItem value="P"
-						>Perempuan</Form.SelectItem
-					>
+					<Form.SelectItem value="L">Laki Laki</Form.SelectItem>
+					<Form.SelectItem value="P">Perempuan</Form.SelectItem>
 				</Form.SelectContent>
 			</Form.Select>
 		</Form.Item>

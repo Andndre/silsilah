@@ -4,7 +4,7 @@
 	import { LogOut, Moon, Sun, User } from 'lucide-svelte';
 	import { toggleMode } from 'mode-watcher';
 	import type { NavItem } from '$lib/types';
-	
+
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Avatar from '$lib/components/ui/avatar/avatar.svelte';
 	import AvatarImage from '$lib/components/ui/avatar/avatar-image.svelte';

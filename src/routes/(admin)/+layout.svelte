@@ -11,31 +11,31 @@
 			title: 'Dashboard',
 			href: '/',
 			icon: 'Home',
-			highlight: /^\/$/
+			highlight: /^\/$/,
 		},
 		{
 			title: 'Anggota Keluarga',
 			href: '/anggota-keluarga',
 			icon: 'Users',
-			highlight: /^\/anggota-keluarga/
+			highlight: /^\/anggota-keluarga/,
 		},
 		{
 			title: 'Jelajahi Cerita',
 			href: '/cerita',
 			icon: 'Trophy',
-			highlight: /^\/cerita/
+			highlight: /^\/cerita/,
 		},
 		{
 			title: 'Grafik Keturunan',
 			href: '/grafik-keturunan',
 			icon: 'GitBranch',
-			highlight: /^\/grafik-keturunan/
+			highlight: /^\/grafik-keturunan/,
 		},
 		{
 			title: 'Notifikasi',
 			href: '/notifikasi',
 			icon: 'Bell',
-			highlight: /^\/notifikasi/
+			highlight: /^\/notifikasi/,
 		},
 	]}
 >

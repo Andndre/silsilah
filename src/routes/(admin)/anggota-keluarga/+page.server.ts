@@ -1,8 +1,9 @@
-import { redirect } from '@sveltejs/kit';
-import type { PageServerLoad } from '../$types';
 import { keluarga } from '$lib/schema';
-import { eq } from 'drizzle-orm';
 import { db } from '$lib/server/database';
+import { redirect } from '@sveltejs/kit';
+import { eq } from 'drizzle-orm';
+
+import type { PageServerLoad } from '../$types';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (!locals.user) {
@@ -11,9 +12,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	const query = await db.query.keluarga.findFirst({
 		where: () => eq(keluarga.id, locals.user!.id),
-		columns: {
-			
-		},
+		columns: {},
 		with: {
 			anggotaKeluarga: {
 				columns: {
@@ -22,9 +21,9 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 					status: true,
 					tanggalMeninggal: true,
 					tanggalLahir: true,
-				}
-			}
-		}
+				},
+			},
+		},
 	});
 
 	if (!query) {
@@ -33,6 +32,6 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	query.anggotaKeluarga.sort((a, b) => a.tanggalLahir.getTime() - b.tanggalLahir.getTime());
 	return {
-		pageData: query
+		pageData: query,
 	};
 };

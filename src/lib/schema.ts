@@ -82,10 +82,10 @@ export const relasiAnggota = relations(anggota, ({ one }) => ({
 		fields: [anggota.agama],
 		references: [agama.id],
 		relationName: 'anggota_agama',
-	})
+	}),
 }));
 
-export const relasiKeluarga = relations(keluarga, ({many, one}) => ({
+export const relasiKeluarga = relations(keluarga, ({ many, one }) => ({
 	anggotaKeluarga: many(anggota, {
 		relationName: 'anggota_keluarga',
 	}),
@@ -103,8 +103,8 @@ export const relasiKeluarga = relations(keluarga, ({many, one}) => ({
 		fields: [keluarga.marga],
 		references: [marga.id],
 		relationName: 'marga_keluarga',
-	})
-}))
+	}),
+}));
 
 export type Agama = InferSelectModel<typeof agama>;
 export type Marga = InferSelectModel<typeof marga>;

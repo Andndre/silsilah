@@ -18,9 +18,9 @@ export function capitalize(input: string) {
 }
 
 export function joinAlamat(alamat: Alamat) {
-	return `${capitalize(alamat.kelurahan)}, ${capitalize(
-		alamat.kecamatan,
-	)}, ${capitalize(alamat.kabupaten)}, ${capitalize(alamat.provinsi)}`;
+	return `${capitalize(alamat.kelurahan)}, ${capitalize(alamat.kecamatan)}, ${capitalize(
+		alamat.kabupaten,
+	)}, ${capitalize(alamat.provinsi)}`;
 }
 
 export function tempatTanggalLahir(alamat: Alamat, date: Date) {
@@ -28,26 +28,35 @@ export function tempatTanggalLahir(alamat: Alamat, date: Date) {
 }
 
 export function formatDate(date: Date) {
-  // Array nama hari dalam Bahasa Indonesia
-  const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-  
-  // Array nama bulan dalam Bahasa Indonesia
-  const months = [
-    "Januari", "Februari", "Maret", "April",
-    "Mei", "Juni", "Juli", "Agustus",
-    "September", "Oktober", "November", "Desember"
-  ];
+	// Array nama hari dalam Bahasa Indonesia
+	const daysOfWeek = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 
-  // Mendapatkan informasi hari, tanggal, bulan, dan tahun
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const dayOfMonth = date.getDate();
-  const month = months[date.getMonth()];
-  const year = date.getFullYear();
+	// Array nama bulan dalam Bahasa Indonesia
+	const months = [
+		'Januari',
+		'Februari',
+		'Maret',
+		'April',
+		'Mei',
+		'Juni',
+		'Juli',
+		'Agustus',
+		'September',
+		'Oktober',
+		'November',
+		'Desember',
+	];
 
-  // Membuat string dengan format yang diinginkan
-  const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
+	// Mendapatkan informasi hari, tanggal, bulan, dan tahun
+	const dayOfWeek = daysOfWeek[date.getDay()];
+	const dayOfMonth = date.getDate();
+	const month = months[date.getMonth()];
+	const year = date.getFullYear();
 
-  return formattedDate;
+	// Membuat string dengan format yang diinginkan
+	const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
+
+	return formattedDate;
 }
 
 /**
