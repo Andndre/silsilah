@@ -1,0 +1,1 @@
+ALTER TABLE `anggota` ADD `status` enum('BM','M') DEFAULT 'BM' NOT NULL;

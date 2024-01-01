@@ -1,55 +1,6 @@
 <script lang="ts">
-	import { H2 } from '$lib/components/typography/index';
+	import { H1 } from '$lib/components/typography/index';
 </script>
 
-<H2>Selamat datang</H2>
-
-<ul>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-	<li>test</li>
-</ul>
+<H1>Selamat datang</H1>
+<div class="pt-4"></div>

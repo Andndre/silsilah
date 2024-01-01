@@ -3,9 +3,21 @@ import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 import { twMerge } from 'tailwind-merge';
 
+import type { Alamat } from './types';
+
 export interface FamilyNode {
 	name: string;
 	children?: FamilyNode[];
+}
+
+export function capitalize(input: string) {
+	return input.charAt(0).toUpperCase() + input.slice(1);
+}
+
+export function joinAlamat(alamat: Alamat) {
+	return `${capitalize(alamat.provinsi)}, ${capitalize(alamat.kabupaten)}, ${capitalize(
+		alamat.kecamatan,
+	)}, ${capitalize(alamat.kelurahan)}`;
 }
 
 /**

@@ -247,7 +247,7 @@
 									on:click={async () => {
 										kelurahan = kel.name;
 										kelurahanId = kel.id;
-										alamat = `${provinsiId};${kabupatenId};${kecamatanId};${kelurahanId}`;
+										alamat = `${kelurahanId}`;
 										focus = false;
 									}}
 								>

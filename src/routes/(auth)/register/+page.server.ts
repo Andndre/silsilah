@@ -89,6 +89,7 @@ export const actions: Actions = {
 						tanggalLahir: new Date(form.data.suami_tanggal_lahir),
 						jenisKelamin: 'L',
 						refKey: v4(),
+						status: 'M',
 					});
 				}
 
@@ -128,6 +129,7 @@ export const actions: Actions = {
 						tanggalLahir: new Date(form.data.istri_tanggal_lahir),
 						jenisKelamin: 'P',
 						refKey: v4(),
+						status: 'M',
 					});
 				}
 

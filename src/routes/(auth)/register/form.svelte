@@ -6,10 +6,9 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import { formSchema, type FormSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms/client';
-	import type { agama } from '$lib/schema';
-	import type { InferSelectModel } from 'drizzle-orm';
+	import type { Agama } from '$lib/schema';
 
-	import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
+	// import SuperDebug from 'sveltekit-superforms/client/SuperDebug.svelte';
 	import InputAlamat from '$lib/components/InputAlamat.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
 	import InputMarga from '$lib/components/InputMarga.svelte';
@@ -17,10 +16,7 @@
 	import { onMount } from 'svelte';
 
 	export let form: SuperValidated<FormSchema>;
-	export let pilihanAgama: InferSelectModel<typeof agama>[];
-
-	let refkeySuami = false;
-	let refkeyIstri = false;
+	export let pilihanAgama: Agama[];
 
 	const theForm = superForm(form, {
 		validators: formSchema,
@@ -35,7 +31,8 @@
 	});
 </script>
 
-<SuperDebug data={$formStore} />
+<!-- 
+<SuperDebug data={$formStore} /> -->
 
 <Form.Root method="POST" controlled form={theForm} schema={formSchema} let:config class="space-y-3">
 	<!-- DATA AYAH -->
