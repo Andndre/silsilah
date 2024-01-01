@@ -39,32 +39,38 @@ export async function getAuthUser(cookie: Cookies) {
 }
 
 /**
- * Refreshes the session cookie based on the refresh session cookie.
- * Generates a new session ID and updates the session and refresh session cookies.
- * @param cookie - The cookies object.
- * @returns True if the session was successfully refreshed, false otherwise.
+ * Refreshes the user session by generating new session and refresh tokens.
+ * @param cookie - The cookie object used to access and set cookies.
+ * @returns A boolean indicating whether the refresh was successful.
  */
 export async function refreshToken(cookie: Cookies) {
+	// Get the current refresh session from the cookie
 	const refreshSession = cookie.get('refresh_session')!;
+
+	// Generate new session and refresh tokens
 	const newSession = v4();
 	const newRefreshSession = v4();
 
+	// Check if the current refresh session exists in the database
 	const result = await db.query.keluarga.findFirst({
 		where: () => eq(keluarga.refreshSession, refreshSession),
 		columns: { id: true },
 	});
 
+	// If the refresh session does not exist, return false
 	if (!result) {
 		return false;
 	}
 
-	const update = await db
+	// Update the refresh session in the database with the new value
+	await db
 		.update(keluarga)
 		.set({
 			refreshSession: newRefreshSession,
 		})
 		.where(eq(keluarga.id, result.id));
 
+	// Set the new session cookie
 	cookie.set('session', newSession, {
 		path: '/',
 		httpOnly: true,
@@ -72,13 +78,15 @@ export async function refreshToken(cookie: Cookies) {
 		expires: new Date(Date.now() + 60 * 60 * 1000), // 1 hour
 	});
 
-	cookie.set('refresh_session', refreshSession, {
+	// Set the new refresh session cookie
+	cookie.set('refresh_session', newRefreshSession, {
 		path: '/',
 		httpOnly: true,
 		secure: import.meta.env.PROD,
 		expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
 	});
 
+	// Return true to indicate successful refresh
 	return true;
 }
 
