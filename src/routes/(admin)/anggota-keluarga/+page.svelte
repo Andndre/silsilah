@@ -1,5 +1,6 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table';
+	import * as Avatar from "$lib/components/ui/avatar";
 
 	import type { PageServerData } from './$types';
 	import { H1 } from '$lib/components/typography/index';
@@ -32,16 +33,23 @@
 		>
 		<Table.Header>
 			<Table.Row>
+				<Table.Head>#</Table.Head>
 				<Table.Head class="font-bold">Nama</Table.Head>
 				<Table.Head>Jenis Kelamin</Table.Head>
 				<Table.Head>Tanggal Lahir</Table.Head>
 				<Table.Head>Status</Table.Head>
-				<Table.Head></Table.Head>
+				<Table.Head>#</Table.Head>
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
 			{#each pageData.anggotaKeluarga as anggota, i (i)}
 				<Table.Row>
+					<Table.Cell>
+						<Avatar.Root>
+							<Avatar.Image src="https://github.com/shadcn.png" alt="@shadcn" />
+							<Avatar.Fallback>CN</Avatar.Fallback>
+						</Avatar.Root>
+					</Table.Cell>
 					<Table.Cell class="font-medium">{anggota.nama}</Table.Cell>
 					<Table.Cell>{anggota.jenisKelamin}</Table.Cell>
 					<Table.Cell>{formatDate(anggota.tanggalLahir)}</Table.Cell>

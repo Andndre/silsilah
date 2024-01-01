@@ -1,10 +1,12 @@
 import { z } from 'zod';
 
 export const formSchema = z.object({
-	name: z.string().min(1, 'Inputkan Nama'),
-	jenis_kelamin: z.enum(['L', 'P'], { required_error: 'Inputkan Jenis Kelamin' }),
-	tempat_lahir: z.string().min(1, 'Inputkan Tempat Lahir'),
-	tanggal_lahir: z.string().min(1, 'Inputkan Tanggal Lahir'),
+	name: z.string().nullable(),
+	jenis_kelamin: z.enum(['L', 'P']).nullable(),
+	tempat_lahir: z.string().nullable(),
+	tanggal_lahir: z.string().nullable(),
+	has_ref_key: z.boolean(),
+	ref_key: z.string().nullable(),
 });
 
 export type FormSchema = typeof formSchema;
