@@ -1,4 +1,4 @@
-export type NavItem = { title: string; href: string; icon: string };
+export type NavItem = { title: string; href: string; icon: string, highlight: RegExp };
 
 export type Provinsi = {
 	id: number;

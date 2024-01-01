@@ -11,13 +11,43 @@ export interface FamilyNode {
 }
 
 export function capitalize(input: string) {
-	return input.charAt(0).toUpperCase() + input.slice(1);
+	return input
+		.split(' ')
+		.map((val) => val.charAt(0).toUpperCase() + val.slice(1).toLowerCase())
+		.join(' ');
 }
 
 export function joinAlamat(alamat: Alamat) {
-	return `${capitalize(alamat.provinsi)}, ${capitalize(alamat.kabupaten)}, ${capitalize(
+	return `${capitalize(alamat.kelurahan)}, ${capitalize(
 		alamat.kecamatan,
-	)}, ${capitalize(alamat.kelurahan)}`;
+	)}, ${capitalize(alamat.kabupaten)}, ${capitalize(alamat.provinsi)}`;
+}
+
+export function tempatTanggalLahir(alamat: Alamat, date: Date) {
+	return `${capitalize(alamat.kelurahan)}/${formatDate(date)}`;
+}
+
+export function formatDate(date: Date) {
+  // Array nama hari dalam Bahasa Indonesia
+  const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+  
+  // Array nama bulan dalam Bahasa Indonesia
+  const months = [
+    "Januari", "Februari", "Maret", "April",
+    "Mei", "Juni", "Juli", "Agustus",
+    "September", "Oktober", "November", "Desember"
+  ];
+
+  // Mendapatkan informasi hari, tanggal, bulan, dan tahun
+  const dayOfWeek = daysOfWeek[date.getDay()];
+  const dayOfMonth = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // Membuat string dengan format yang diinginkan
+  const formattedDate = `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
+
+  return formattedDate;
 }
 
 /**

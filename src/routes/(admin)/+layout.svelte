@@ -11,23 +11,35 @@
 			title: 'Dashboard',
 			href: '/',
 			icon: 'Home',
+			highlight: /^\/$/
 		},
 		{
 			title: 'Anggota Keluarga',
 			href: '/anggota-keluarga',
 			icon: 'Users',
+			highlight: /^\/anggota-keluarga/
 		},
 		{
-			title: 'Data Pencapaian',
-			href: '/data-pencapaian',
+			title: 'Jelajahi Cerita',
+			href: '/cerita',
 			icon: 'Trophy',
+			highlight: /^\/cerita/
+		},
+		{
+			title: 'Grafik Keturunan',
+			href: '/grafik-keturunan',
+			icon: 'GitBranch',
+			highlight: /^\/grafik-keturunan/
 		},
 		{
 			title: 'Notifikasi',
 			href: '/notifikasi',
 			icon: 'Bell',
+			highlight: /^\/notifikasi/
 		},
 	]}
 >
-	<slot />
+	<div class="max-w-[800px] mx-auto">
+		<slot />
+	</div>
 </Dashboard>

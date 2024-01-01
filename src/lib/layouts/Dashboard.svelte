@@ -1,16 +1,15 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-	import Lucideicon from '$lib/components/Lucideicon.svelte';
-	import { ArrowLeftIcon, ArrowRightIcon, LogOut, Moon, Sun, User } from 'lucide-svelte';
-	import { cn } from '$lib/utils';
-	import Sidebar from '$lib/components/Sidebar.svelte';
-	import type { NavItem } from '$lib/types';
 	import * as Popover from '$lib/components/ui/popover';
+
+	import { LogOut, Moon, Sun, User } from 'lucide-svelte';
+	import { toggleMode } from 'mode-watcher';
+	import type { NavItem } from '$lib/types';
+	
+	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Avatar from '$lib/components/ui/avatar/avatar.svelte';
 	import AvatarImage from '$lib/components/ui/avatar/avatar-image.svelte';
 	import AvatarFallback from '$lib/components/ui/avatar/avatar-fallback.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import { toggleMode } from 'mode-watcher';
 
 	export let sidebarNavItems: NavItem[];
 </script>

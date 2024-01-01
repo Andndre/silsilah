@@ -72,6 +72,6 @@ export const actions: Actions = {
 			expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30), // 30 days
 		});
 
-		redirect(302, securePath('/'));
+		redirect(302, securePath(event.url.searchParams.get('redirect') || '/'));
 	},
 };

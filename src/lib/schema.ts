@@ -71,13 +71,39 @@ export const gambarCerita = mysqlTable('gambar_cerita', {
 	gambar: varchar('gambar', { length: 25 }), // idAnggota-idCerita.png
 });
 
-export const keluargaAnggota = relations(anggota, ({ one }) => ({
-	keluargaAnggota: one(keluarga, {
+export const relasiAnggota = relations(anggota, ({ one }) => ({
+	keluargaAsal: one(keluarga, {
 		fields: [anggota.keluargaAsal],
 		references: [keluarga.id],
 		relationName: 'anggota_keluarga',
 	}),
+	agama: one(agama, {
+		fields: [anggota.agama],
+		references: [agama.id],
+		relationName: 'anggota_agama',
+	})
 }));
+
+export const relasiKeluarga = relations(keluarga, ({many, one}) => ({
+	anggotaKeluarga: many(anggota, {
+		relationName: 'anggota_keluarga',
+	}),
+	suami: one(anggota, {
+		fields: [keluarga.suami],
+		references: [anggota.id],
+		relationName: 'ayah',
+	}),
+	istri: one(anggota, {
+		fields: [keluarga.istri],
+		references: [anggota.id],
+		relationName: 'ibu',
+	}),
+	marga: one(marga, {
+		fields: [keluarga.marga],
+		references: [marga.id],
+		relationName: 'marga_keluarga',
+	})
+}))
 
 export type Agama = InferSelectModel<typeof agama>;
 export type Marga = InferSelectModel<typeof marga>;

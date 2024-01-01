@@ -1,15 +1,22 @@
 <script lang="ts">
-	import { onMount, type SvelteComponent } from 'svelte';
 	import Lucideicon from '$lib/components/Lucideicon.svelte';
-	import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
 	import type { NavItem } from '$lib/types';
+	import { afterNavigate } from '$app/navigation';
+	import { onMount } from 'svelte';
+	
+	let pathname: string;
+
+	afterNavigate(() => {
+		pathname = window.location.pathname
+	})
+
+	onMount(() => {
+		pathname = window.location.pathname
+	})
 
 	export let sidebarNavItems: NavItem[];
-	let pathname: string;
-	onMount(() => {
-		pathname = window.location.pathname;
-	});
+
 </script>
 
 <aside
@@ -29,7 +36,7 @@
 				title={item.title}
 				class={cn(
 					'hover:bg-accent-foreground dark:hover:bg-accent text-accent transition-all rounded-md',
-					pathname == item.href
+					item.highlight.exec(pathname)
 						? 'dark:bg-accent text-accent dark:text-accent-foreground'
 						: 'text-muted-foreground',
 				)}

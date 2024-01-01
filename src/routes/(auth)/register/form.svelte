@@ -31,8 +31,7 @@
 	});
 </script>
 
-<!-- 
-<SuperDebug data={$formStore} /> -->
+<!--  <SuperDebug data={$formStore} /> -->
 
 <Form.Root method="POST" controlled form={theForm} schema={formSchema} let:config class="space-y-3">
 	<!-- DATA AYAH -->
@@ -43,7 +42,9 @@
 		</Card.Header>
 		<Card.Content class="space-y-2">
 			<Form.Field {config} name="suami_has_ref_key">
-				<Form.Item class="flex flex-row items-center justify-between rounded-lg border p-4">
+				<Form.Item
+					class="flex flex-row items-center justify-between rounded-lg border p-4 bg-primary/10"
+				>
 					<div class="space-y-0.5">
 						<Form.Label>Hubungkan ke data sebelumnya</Form.Label>
 						<Form.Description>
@@ -109,7 +110,9 @@
 		</Card.Header>
 		<Card.Content class="space-y-2">
 			<Form.Field {config} name="istri_has_ref_key">
-				<Form.Item class="flex flex-row items-center justify-between rounded-lg border p-4">
+				<Form.Item
+					class="flex flex-row items-center justify-between rounded-lg border p-4 bg-primary/10"
+				>
 					<div class="space-y-0.5">
 						<Form.Label>Hubungkan ke data sebelumnya</Form.Label>
 						<Form.Description>
