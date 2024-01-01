@@ -50,6 +50,7 @@
 		"lucide-svelte": "^0.294.0",
 		"mode-watcher": "^0.1.2",
 		"mysql2": "^3.6.5",
+		"sharp": "^0.33.1",
 		"sveltekit-superforms": "^1.12.0",
 		"tailwind-merge": "^2.1.0",
 		"tailwind-variants": "^0.1.19",
