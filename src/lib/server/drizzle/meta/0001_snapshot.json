@@ -1,8 +1,8 @@
 {
 	"version": "5",
 	"dialect": "mysql",
-	"id": "cbe98ed7-069b-4f8b-b5b1-5883fc603da8",
-	"prevId": "bfdd7b7c-5ea2-451f-b1f2-2ad8523272dd",
+	"id": "c75a6b9d-032f-40f4-91de-f877f19348ec",
+	"prevId": "a44b55ad-867c-4ee0-902d-32bafd7b237f",
 	"tables": {
 		"agama": {
 			"name": "agama",
@@ -41,6 +41,13 @@
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": true
+				},
+				"ref_key": {
+					"name": "ref_key",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
 				},
 				"nama_lengkap": {
 					"name": "nama_lengkap",
@@ -82,6 +89,13 @@
 					"type": "int",
 					"primaryKey": false,
 					"notNull": true,
+					"autoincrement": false
+				},
+				"keluarga_asal": {
+					"name": "keluarga_asal",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": false,
 					"autoincrement": false
 				}
 			},
@@ -233,18 +247,25 @@
 					"notNull": true,
 					"autoincrement": true
 				},
+				"username": {
+					"name": "username",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
 				"suami": {
 					"name": "suami",
 					"type": "int",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"istri": {
 					"name": "istri",
 					"type": "int",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"alamat": {
@@ -258,19 +279,26 @@
 					"name": "tanggal_menikah",
 					"type": "date",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"password": {
 					"name": "password",
 					"type": "varchar(256)",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"marga": {
 					"name": "marga",
 					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"refresh_session": {
+					"name": "refresh_session",
+					"type": "varchar(256)",
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": false
@@ -312,7 +340,24 @@
 					"columns": ["id"]
 				}
 			},
-			"uniqueConstraints": {}
+			"uniqueConstraints": {
+				"keluarga_username_unique": {
+					"name": "keluarga_username_unique",
+					"columns": ["username"]
+				},
+				"keluarga_suami_unique": {
+					"name": "keluarga_suami_unique",
+					"columns": ["suami"]
+				},
+				"keluarga_istri_unique": {
+					"name": "keluarga_istri_unique",
+					"columns": ["istri"]
+				},
+				"keluarga_refresh_session_unique": {
+					"name": "keluarga_refresh_session_unique",
+					"columns": ["refresh_session"]
+				}
+			}
 		},
 		"marga": {
 			"name": "marga",
@@ -354,6 +399,8 @@
 	"_meta": {
 		"schemas": {},
 		"tables": {},
-		"columns": {}
+		"columns": {
+			"\"keluarga\".\"session\"": "\"keluarga\".\"refresh_session\""
+		}
 	}
 }

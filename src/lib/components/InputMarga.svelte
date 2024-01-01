@@ -18,7 +18,7 @@
 	let inputKeteranganMargaBaru = '';
 	let prosesBuatMarga = false;
 
-	export let value: number;
+	export let value: number | null;
 
 	async function searchMarga() {
 		if (searching) return;

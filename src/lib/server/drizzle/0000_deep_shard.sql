@@ -6,10 +6,14 @@ CREATE TABLE `agama` (
 --> statement-breakpoint
 CREATE TABLE `anggota` (
 	`id` int AUTO_INCREMENT NOT NULL,
+	`ref_key` varchar(256),
 	`nama_lengkap` varchar(100) NOT NULL,
 	`jenis_kelamin` enum('L','P') NOT NULL,
 	`tempat_lahir` varchar(100) NOT NULL,
+	`tanggal_lahir` date NOT NULL,
+	`tanggal_meninggal` date,
 	`agama` int NOT NULL,
+	`keluarga_asal` int,
 	CONSTRAINT `anggota_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -33,13 +37,19 @@ CREATE TABLE `gambar_cerita` (
 --> statement-breakpoint
 CREATE TABLE `keluarga` (
 	`id` int AUTO_INCREMENT NOT NULL,
-	`suami` int,
-	`istri` int,
+	`username` varchar(256) NOT NULL,
+	`suami` int NOT NULL,
+	`istri` int NOT NULL,
 	`alamat` varchar(256) NOT NULL,
-	`tanggal_menikah` date,
-	`password` varchar(256),
+	`tanggal_menikah` date NOT NULL,
+	`password` varchar(256) NOT NULL,
 	`marga` int NOT NULL,
-	CONSTRAINT `keluarga_id` PRIMARY KEY(`id`)
+	`session` varchar(256) NOT NULL,
+	CONSTRAINT `keluarga_id` PRIMARY KEY(`id`),
+	CONSTRAINT `keluarga_username_unique` UNIQUE(`username`),
+	CONSTRAINT `keluarga_suami_unique` UNIQUE(`suami`),
+	CONSTRAINT `keluarga_istri_unique` UNIQUE(`istri`),
+	CONSTRAINT `keluarga_session_unique` UNIQUE(`session`)
 );
 --> statement-breakpoint
 CREATE TABLE `marga` (

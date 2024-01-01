@@ -1,7 +1,7 @@
 {
 	"version": "5",
 	"dialect": "mysql",
-	"id": "bfdd7b7c-5ea2-451f-b1f2-2ad8523272dd",
+	"id": "a44b55ad-867c-4ee0-902d-32bafd7b237f",
 	"prevId": "00000000-0000-0000-0000-000000000000",
 	"tables": {
 		"agama": {
@@ -42,6 +42,13 @@
 					"notNull": true,
 					"autoincrement": true
 				},
+				"ref_key": {
+					"name": "ref_key",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
 				"nama_lengkap": {
 					"name": "nama_lengkap",
 					"type": "varchar(100)",
@@ -63,11 +70,32 @@
 					"notNull": true,
 					"autoincrement": false
 				},
+				"tanggal_lahir": {
+					"name": "tanggal_lahir",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"tanggal_meninggal": {
+					"name": "tanggal_meninggal",
+					"type": "date",
+					"primaryKey": false,
+					"notNull": false,
+					"autoincrement": false
+				},
 				"agama": {
 					"name": "agama",
 					"type": "int",
 					"primaryKey": false,
 					"notNull": true,
+					"autoincrement": false
+				},
+				"keluarga_asal": {
+					"name": "keluarga_asal",
+					"type": "int",
+					"primaryKey": false,
+					"notNull": false,
 					"autoincrement": false
 				}
 			},
@@ -219,18 +247,25 @@
 					"notNull": true,
 					"autoincrement": true
 				},
+				"username": {
+					"name": "username",
+					"type": "varchar(256)",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
 				"suami": {
 					"name": "suami",
 					"type": "int",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"istri": {
 					"name": "istri",
 					"type": "int",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"alamat": {
@@ -244,19 +279,26 @@
 					"name": "tanggal_menikah",
 					"type": "date",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"password": {
 					"name": "password",
 					"type": "varchar(256)",
 					"primaryKey": false,
-					"notNull": false,
+					"notNull": true,
 					"autoincrement": false
 				},
 				"marga": {
 					"name": "marga",
 					"type": "int",
+					"primaryKey": false,
+					"notNull": true,
+					"autoincrement": false
+				},
+				"session": {
+					"name": "session",
+					"type": "varchar(256)",
 					"primaryKey": false,
 					"notNull": true,
 					"autoincrement": false
@@ -298,7 +340,24 @@
 					"columns": ["id"]
 				}
 			},
-			"uniqueConstraints": {}
+			"uniqueConstraints": {
+				"keluarga_username_unique": {
+					"name": "keluarga_username_unique",
+					"columns": ["username"]
+				},
+				"keluarga_suami_unique": {
+					"name": "keluarga_suami_unique",
+					"columns": ["suami"]
+				},
+				"keluarga_istri_unique": {
+					"name": "keluarga_istri_unique",
+					"columns": ["istri"]
+				},
+				"keluarga_session_unique": {
+					"name": "keluarga_session_unique",
+					"columns": ["session"]
+				}
+			}
 		},
 		"marga": {
 			"name": "marga",

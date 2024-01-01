@@ -7,6 +7,8 @@ import {
 import { drizzle } from 'drizzle-orm/mysql2';
 import mysql from 'mysql2/promise';
 
+import * as schema from '../schema';
+
 const connection = await mysql.createConnection({
 	host: DATABASE_HOST,
 	user: DATABASE_USERNAME,
@@ -15,4 +17,4 @@ const connection = await mysql.createConnection({
 	port: 3306,
 });
 
-export const db = drizzle(connection);
+export const db = drizzle(connection, { schema, mode: 'default' });

@@ -19,7 +19,7 @@
 
 	let searching = false;
 
-	export let alamat: string;
+	export let alamat: string | null = '';
 
 	let focus = false;
 
@@ -87,14 +87,13 @@
 			);
 		}
 	}
-
 	onMount(() => {
 		getAllProvinces();
 	});
 </script>
 
-<Tabs.Root bind:value={activeTab} class={className}>
-	<Tabs.List>
+<Tabs.Root bind:value={activeTab} class={`${className}`}>
+	<Tabs.List class="flex flex-wrap justify-start h-auto">
 		<Tabs.Trigger
 			value="provinsi"
 			on:click={() => {
@@ -113,16 +112,18 @@
 				kecamatanId = '';
 				kelurahan = '';
 				kelurahanId = '';
-			}}>Kabupaten</Tabs.Trigger
+			}}
+			disabled={!provinsi}>Kabupaten</Tabs.Trigger
 		>
 		<Tabs.Trigger
 			value="kecamatan"
 			on:click={() => {
 				kelurahan = '';
 				kelurahanId = '';
-			}}>Kecamatan</Tabs.Trigger
+			}}
+			disabled={!kabupaten}>Kecamatan</Tabs.Trigger
 		>
-		<Tabs.Trigger value="kelurahan">Kelurahan</Tabs.Trigger>
+		<Tabs.Trigger value="kelurahan" disabled={!kecamatan}>Kelurahan</Tabs.Trigger>
 	</Tabs.List>
 	<Tabs.Content value="provinsi" class="relative">
 		<Input
@@ -130,6 +131,7 @@
 			name="provinsi"
 			bind:value={provinsi}
 			on:focus={() => (focus = true)}
+			autocomplete="off"
 		/>
 		{#if focus}
 			<ul class="absolute w-full bg-background border rounded-md overflow-hidden z-[9999]">
@@ -162,6 +164,7 @@
 			name="kabupaten"
 			bind:value={kabupaten}
 			on:focus={() => (focus = true)}
+			autocomplete="off"
 		/>
 		{#if focus}
 			<ul class="absolute w-full bg-background border rounded-md overflow-hidden z-[9999]">
@@ -194,6 +197,7 @@
 			name="kecamatan"
 			bind:value={kecamatan}
 			on:focus={() => (focus = true)}
+			autocomplete="off"
 		/>
 		{#if focus}
 			<ul class="absolute w-full bg-background border rounded-md overflow-hidden z-[9999]">
@@ -226,7 +230,11 @@
 			name="kelurahan"
 			bind:value={kelurahan}
 			on:focus={() => (focus = true)}
-			on:blur={() => (setTimeout(() => { focus = false }, 500))}
+			on:blur={() =>
+				setTimeout(() => {
+					focus = false;
+				}, 500)}
+			autocomplete="off"
 		/>
 		{#if allKelurahan.length > 0 && focus}
 			<ul class="absolute w-full bg-background border rounded-md overflow-hidden z-[9999]">

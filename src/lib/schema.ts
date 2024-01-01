@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { boolean, date, int, mysqlEnum, mysqlTable, text, varchar } from 'drizzle-orm/mysql-core';
+import { date, int, mysqlEnum, mysqlTable, text, varchar } from 'drizzle-orm/mysql-core';
 
 export const agama = mysqlTable('agama', {
 	id: int('id').autoincrement().notNull().primaryKey(),
@@ -43,6 +43,7 @@ export const keluarga = mysqlTable('keluarga', {
 	marga: int('marga')
 		.notNull()
 		.references(() => marga.id, { onDelete: 'cascade' }),
+	refreshSession: varchar('refresh_session', { length: 256 }).notNull().unique(),
 });
 
 export const cerita = mysqlTable('cerita', {
@@ -69,5 +70,6 @@ export const keluargaAnggota = relations(anggota, ({ one }) => ({
 	keluargaAnggota: one(keluarga, {
 		fields: [anggota.keluargaAsal],
 		references: [keluarga.id],
+		relationName: 'anggota_keluarga',
 	}),
 }));

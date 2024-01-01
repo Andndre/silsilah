@@ -1,1 +1,0 @@
-ALTER TABLE `keluarga` ADD CONSTRAINT `keluarga_username_unique` UNIQUE(`username`);

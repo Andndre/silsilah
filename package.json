@@ -12,7 +12,8 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"db:pull": "drizzle-kit introspect:mysql",
 		"db:migrate": "drizzle-kit generate:mysql",
-		"db:push": "drizzle-kit push:mysql"
+		"db:push": "drizzle-kit push:mysql",
+		"db:seed": "npx ts-node src/lib/server/seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -44,6 +45,7 @@
 		"d3": "^7.8.5",
 		"dotenv": "^16.3.1",
 		"drizzle-orm": "^0.29.1",
+		"flowbite-svelte": "^0.44.21",
 		"formsnap": "^0.4.1",
 		"lucide-svelte": "^0.294.0",
 		"mode-watcher": "^0.1.2",
