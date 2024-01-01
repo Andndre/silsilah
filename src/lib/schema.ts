@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { type InferSelectModel, relations } from 'drizzle-orm';
 import { date, int, mysqlEnum, mysqlTable, text, varchar } from 'drizzle-orm/mysql-core';
 
 export const agama = mysqlTable('agama', {
@@ -73,3 +73,11 @@ export const keluargaAnggota = relations(anggota, ({ one }) => ({
 		relationName: 'anggota_keluarga',
 	}),
 }));
+
+export type Agama = InferSelectModel<typeof agama>;
+export type Marga = InferSelectModel<typeof marga>;
+export type Anggota = InferSelectModel<typeof anggota>;
+export type Keluarga = InferSelectModel<typeof keluarga>;
+export type Cerita = InferSelectModel<typeof cerita>;
+export type GambarCerita = InferSelectModel<typeof gambarCerita>;
+
