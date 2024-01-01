@@ -21,7 +21,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 					status: true,
 					tanggalMeninggal: true,
 					tanggalLahir: true,
-					gambar: true
+					gambar: true,
+					id: true,
 				},
 			},
 		},
