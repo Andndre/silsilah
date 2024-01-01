@@ -1,0 +1,1 @@
+ALTER TABLE `anggota` ADD `foto` varchar(25);

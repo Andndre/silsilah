@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 					nama: true,
 				},
 			},
-			suami: {
+			suami_: {
 				columns: {
 					nama: true,
 					keluargaAsal: true,
@@ -36,7 +36,7 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 					status: true
 				},
 				with: {
-					agama: {
+					agama_: {
 						columns: {
 							nama: true
 						}
@@ -48,7 +48,7 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 					}
 				}
 			},
-			istri: {
+			istri_: {
 				columns: {
 					nama: true,
 					keluargaAsal: true,
@@ -59,7 +59,7 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 					status: true
 				},
 				with: {
-					agama: {
+					agama_: {
 						columns: {
 							nama: true
 						}
@@ -71,7 +71,7 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 					}
 				}
 			},
-			marga: {
+			marga_: {
 				columns: {
 					nama: true,
 					keterangan: true
@@ -81,19 +81,15 @@ export const load: PageServerLoad = async ({ locals, fetch }) => {
 	});
 
 	if (!query) {
-		return fail(400, {
-			message: 'User not found',
-		});
+		throw new Error('Keluarga not found');
 	}
 
 	const responseAlamat = await fetch(`/api/lokasi/ringkas/${user.alamat}`);
-	const responseAlamatLahirSuami = await fetch(`/api/lokasi/kelurahan/satu/${query.suami.tempatLahir}`);
-	const responseAlamatLahirIstri = await fetch(`/api/lokasi/kelurahan/satu/${query.istri.tempatLahir}`);
+	const responseAlamatLahirSuami = await fetch(`/api/lokasi/kelurahan/satu/${query.suami_.tempatLahir}`);
+	const responseAlamatLahirIstri = await fetch(`/api/lokasi/kelurahan/satu/${query.istri_.tempatLahir}`);
 
 	if (!responseAlamat.ok || !responseAlamatLahirSuami.ok || !responseAlamatLahirIstri.ok) {
-		return fail(400, {
-			message: 'Alamat not found',
-		});
+		throw new Error('Failed to fetch data');
 	}
 
 	const alamat = (await responseAlamat.json()) as Alamat;

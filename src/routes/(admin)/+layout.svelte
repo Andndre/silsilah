@@ -39,7 +39,7 @@
 		},
 	]}
 >
-	<div class="max-w-[800px] mx-auto">
+	<div class="max-w-[1000px] mx-auto">
 		<slot />
 	</div>
 </Dashboard>

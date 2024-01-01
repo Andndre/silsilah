@@ -30,6 +30,7 @@ export const anggota = mysqlTable('anggota', {
 	keluargaAsal: int('keluarga_asal'),
 	status: mysqlEnum('status', ['BM', 'M']).default('BM').notNull(), // BM: Belum menikah, M: Menikah
 	// Jika = M, berarti pasti ada pada tabel keluarga (sebagai suami atau istri)
+	gambar: varchar('foto', { length: 25 }),
 });
 
 export const keluarga = mysqlTable('keluarga', {
@@ -77,7 +78,7 @@ export const relasiAnggota = relations(anggota, ({ one }) => ({
 		references: [keluarga.id],
 		relationName: 'anggota_keluarga',
 	}),
-	agama: one(agama, {
+	agama_: one(agama, {
 		fields: [anggota.agama],
 		references: [agama.id],
 		relationName: 'anggota_agama',
@@ -88,17 +89,17 @@ export const relasiKeluarga = relations(keluarga, ({many, one}) => ({
 	anggotaKeluarga: many(anggota, {
 		relationName: 'anggota_keluarga',
 	}),
-	suami: one(anggota, {
+	suami_: one(anggota, {
 		fields: [keluarga.suami],
 		references: [anggota.id],
 		relationName: 'ayah',
 	}),
-	istri: one(anggota, {
+	istri_: one(anggota, {
 		fields: [keluarga.istri],
 		references: [anggota.id],
 		relationName: 'ibu',
 	}),
-	marga: one(marga, {
+	marga_: one(marga, {
 		fields: [keluarga.marga],
 		references: [marga.id],
 		relationName: 'marga_keluarga',

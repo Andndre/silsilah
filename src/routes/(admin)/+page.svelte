@@ -9,7 +9,7 @@
 
 	const {pageData} = data;
 
-	const keteranganMargaKeluarga = pageData?.marga.keterangan ? ` (${pageData.marga.keterangan})` : '';
+	const keteranganMargaKeluarga = pageData?.marga_.keterangan ? ` (${pageData.marga_.keterangan})` : '';
 
 </script>
 
@@ -33,7 +33,7 @@
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Marga</Table.Cell>
-			<Table.Cell>{pageData.marga.nama} {keteranganMargaKeluarga}</Table.Cell>
+			<Table.Cell>{pageData.marga_.nama} {keteranganMargaKeluarga}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Jumlah Anggota Keluarga (+ Orang Tua)</Table.Cell>
@@ -41,31 +41,31 @@
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Nama Ayah</Table.Cell>
-			<Table.Cell>{pageData.suami.nama}</Table.Cell>
+			<Table.Cell>{pageData.suami_.nama}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Agama Ayah</Table.Cell>
-			<Table.Cell>{pageData.suami.agama.nama}</Table.Cell>
+			<Table.Cell>{pageData.suami_.agama_.nama}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Tempat / Tanggal Lahir Ayah</Table.Cell>
-			<Table.Cell>{capitalize(pageData.kelurahanLahirSuami)} / {formatDate(pageData.suami.tanggalLahir)}</Table.Cell>
+			<Table.Cell>{capitalize(pageData.kelurahanLahirSuami)} / {formatDate(pageData.suami_.tanggalLahir)}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Nama Ibu</Table.Cell>
-			<Table.Cell>{pageData.istri.nama}</Table.Cell>
+			<Table.Cell>{pageData.istri_.nama}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Agama Ibu</Table.Cell>
-			<Table.Cell>{pageData.istri.agama.nama}</Table.Cell>
+			<Table.Cell>{pageData.istri_.agama_.nama}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Tempat / Tanggal Lahir Ibu</Table.Cell>
-			<Table.Cell>{capitalize(pageData.kelurahanLahirIstri)} / {formatDate(pageData.istri.tanggalLahir)}</Table.Cell>
+			<Table.Cell>{capitalize(pageData.kelurahanLahirIstri)} / {formatDate(pageData.istri_.tanggalLahir)}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Marga Ibu (sebelum menikah)</Table.Cell>
-			<Table.Cell>{pageData.istri.keluargaAsal?.marga || 'Tidak Ada Data'}</Table.Cell>
+			<Table.Cell>{pageData.istri_.keluargaAsal?.marga || 'Tidak Ada Data'}</Table.Cell>
 		</Table.Row>
 		<Table.Row>
 			<Table.Cell class="font-medium">Menikah pada</Table.Cell>
