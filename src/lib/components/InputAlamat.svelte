@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import * as Tabs from './ui/tabs';
 	import Input from './ui/input/input.svelte';
+	import type { Kelurahan } from '$lib/types';
 
 	let className: string = '';
 	export { className as class };
@@ -87,8 +88,20 @@
 			);
 		}
 	}
-	onMount(() => {
+	onMount(async () => {
 		getAllProvinces();
+		if (alamat) {
+			provinsi = '##'
+			kabupaten = '##'
+			kecamatan = '##'
+			const res = await fetch(`/api/lokasi/kelurahan/satu/${alamat}`);
+			if (!res.ok) return;
+			const kelurahanSatu = await res.json() as Kelurahan;
+			kecamatanId = kelurahanSatu.district_id + '';
+			await getAllKelurahan();
+			kelurahanId = alamat;
+			kelurahan = kelurahanSatu.name;
+		}
 	});
 </script>
 
