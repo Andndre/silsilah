@@ -22,10 +22,7 @@
 				<Popover.Root>
 					<Popover.Trigger>
 						<Avatar class="cursor-pointer">
-							<AvatarImage
-								src="/images/profile-L.png"
-								alt="user avatar"
-							/>
+							<AvatarImage src="/images/profile-L.png" alt="user avatar" />
 							<AvatarFallback>AN</AvatarFallback>
 						</Avatar>
 					</Popover.Trigger>

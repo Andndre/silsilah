@@ -39,7 +39,7 @@ export const actions: Actions = {
 					const agt = await tx.query.anggota.findFirst({
 						where: () => eq(anggota.refKey, form.data.ref_key!),
 						columns: { id: true, keluargaAsal: true },
-					})
+					});
 
 					if (!agt) {
 						error = 'Ref Key tidak ditemukan';
@@ -94,7 +94,7 @@ export const actions: Actions = {
 						jenisKelamin: form.data.jenis_kelamin,
 						tanggalLahir: new Date(form.data.tanggal_lahir),
 						tempatLahir: form.data.tempat_lahir,
-						refKey: v4()
+						refKey: v4(),
 					});
 				}
 			});

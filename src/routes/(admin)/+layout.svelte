@@ -3,10 +3,9 @@
 	import { ModeWatcher } from 'mode-watcher';
 	import Dashboard from '$lib/layouts/Dashboard.svelte';
 	import { fly } from 'svelte/transition';
-	import type { LayoutServerData } from './$types'
+	import type { LayoutServerData } from './$types';
 
 	export let data: LayoutServerData;
-
 </script>
 
 <ModeWatcher />
@@ -45,7 +44,11 @@
 	]}
 >
 	{#key data.url}
-		<div class="max-w-[1000px] mx-auto" in:fly={{ y: 100, duration: 300, delay: 300 }} out:fly={{ duration: 300 }}>
+		<div
+			class="max-w-[1000px] mx-auto"
+			in:fly={{ y: 100, duration: 300, delay: 300 }}
+			out:fly={{ duration: 300 }}
+		>
 			<slot />
 		</div>
 	{/key}

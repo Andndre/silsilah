@@ -190,12 +190,12 @@
 			</Form.Field>
 			<InputAlamat bind:alamat={$formStore.alamat_tinggal} class="py-1" />
 			{#if !$formStore.suami_has_ref_key}
-			<Form.Field {config} name="marga">
-				<Form.Item class="pt-3">
-					<Form.Label>Marga</Form.Label>
-					<InputMarga bind:value={$formStore.marga} />
-				</Form.Item>
-			</Form.Field>
+				<Form.Field {config} name="marga">
+					<Form.Item class="pt-3">
+						<Form.Label>Marga</Form.Label>
+						<InputMarga bind:value={$formStore.marga} />
+					</Form.Item>
+				</Form.Field>
 			{/if}
 			<Form.Field {config} name="tanggal_menikah">
 				<Form.Item>

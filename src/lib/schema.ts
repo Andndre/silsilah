@@ -58,7 +58,7 @@ export const cerita = mysqlTable('cerita', {
 	judul: varchar('judul', { length: 200 }).notNull(),
 	idAnggota: int('id_anggota')
 		.notNull()
-		.references(() => anggota.id, { onDelete: 'cascade', onUpdate: 'cascade'  }),
+		.references(() => anggota.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	deskripsi: text('deskripsi').notNull(),
 	tahun: int('tahun').notNull(),
 	tahunAkhir: int('tahun_akhir'),

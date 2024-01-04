@@ -91,12 +91,12 @@
 	onMount(async () => {
 		getAllProvinces();
 		if (alamat) {
-			provinsi = '##'
-			kabupaten = '##'
-			kecamatan = '##'
+			provinsi = '##';
+			kabupaten = '##';
+			kecamatan = '##';
 			const res = await fetch(`/api/lokasi/kelurahan/satu/${alamat}`);
 			if (!res.ok) return;
-			const kelurahanSatu = await res.json() as Kelurahan;
+			const kelurahanSatu = (await res.json()) as Kelurahan;
 			kecamatanId = kelurahanSatu.district_id + '';
 			await getAllKelurahan();
 			kelurahanId = alamat;

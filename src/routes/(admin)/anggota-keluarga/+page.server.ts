@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 					tempatLahir: true,
 					gambar: true,
 					id: true,
-					refKey: true
+					refKey: true,
 				},
 			},
 		},
@@ -53,7 +53,9 @@ export const actions: Actions = {
 			};
 		}
 
-		const [{ affectedRows }] = await db.delete(anggota).where(and(eq(anggota.id, +id), eq(anggota.keluargaAsal, locals.user!.id)));
+		const [{ affectedRows }] = await db
+			.delete(anggota)
+			.where(and(eq(anggota.id, +id), eq(anggota.keluargaAsal, locals.user!.id)));
 
 		if (affectedRows === 0) {
 			return {

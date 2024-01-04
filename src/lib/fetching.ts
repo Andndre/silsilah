@@ -1,10 +1,8 @@
-import { browser } from "$app/environment";
+import { browser } from '$app/environment';
 
 export async function getKelurahanClient(kelurahanId: string) {
 	if (browser) {
-		const responseAlamat = await fetch(
-			`/api/lokasi/kelurahan/satu/${kelurahanId}`,
-		);
+		const responseAlamat = await fetch(`/api/lokasi/kelurahan/satu/${kelurahanId}`);
 		return (await responseAlamat.json()).name as string;
 	}
 	return null;

@@ -52,15 +52,19 @@ export const actions: Actions = {
 				if (form.data.suami_has_ref_key != undefined && form.data.suami_has_ref_key) {
 					// Find the anggota with matching refKey
 					const result = await tx.query.anggota.findFirst({
-						where: () => and(eq(anggota.refKey, form.data.suami_ref_key!), eq(anggota.jenisKelamin, 'L')),
+						where: () =>
+							and(
+								eq(anggota.refKey, form.data.suami_ref_key!),
+								eq(anggota.jenisKelamin, 'L'),
+							),
 						columns: { id: true },
 						with: {
 							keluargaAsal: {
 								columns: {
-									marga: true
-								}
-							}
-						}
+									marga: true,
+								},
+							},
+						},
 					});
 
 					// If a matching anggota is found
@@ -102,7 +106,11 @@ export const actions: Actions = {
 				if (form.data.istri_has_ref_key != undefined && form.data.istri_has_ref_key) {
 					// Find the anggota record with matching refKey
 					const result = await tx.query.anggota.findFirst({
-						where: () => and(eq(anggota.refKey, form.data.istri_ref_key!), eq(anggota.jenisKelamin, 'P')),
+						where: () =>
+							and(
+								eq(anggota.refKey, form.data.istri_ref_key!),
+								eq(anggota.jenisKelamin, 'P'),
+							),
 						columns: { id: true },
 					});
 
@@ -122,7 +130,8 @@ export const actions: Actions = {
 						!form.data.istri_tanggal_lahir ||
 						!form.data.istri_nama
 					) {
-						error = 'Data ibu tidak lengkap #istri_agama|istri_tempat_lahir|istri_tanggal_lahir|istri_nama';
+						error =
+							'Data ibu tidak lengkap #istri_agama|istri_tempat_lahir|istri_tanggal_lahir|istri_nama';
 						tx.rollback();
 						return;
 					}
@@ -146,7 +155,8 @@ export const actions: Actions = {
 					!form.data.password ||
 					!form.data.password_konfirmasi
 				) {
-					error = 'Data keluarga tidak lengkap #alamat|tanggal_menikah|username|password|password_konfirmasi';
+					error =
+						'Data keluarga tidak lengkap #alamat|tanggal_menikah|username|password|password_konfirmasi';
 					tx.rollback();
 					return;
 				}
@@ -175,10 +185,12 @@ export const actions: Actions = {
 					refreshSession: v4(),
 				});
 
-				await tx.update(anggota).set({
-					status: 'M',
-				}).where(or(eq(anggota.id, idAyah), eq(anggota.id, idIbu)));
-
+				await tx
+					.update(anggota)
+					.set({
+						status: 'M',
+					})
+					.where(or(eq(anggota.id, idAyah), eq(anggota.id, idIbu)));
 			});
 
 			if (error) {

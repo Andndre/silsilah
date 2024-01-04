@@ -32,5 +32,5 @@ export type Alamat = {
 
 export enum JenisKelamin {
 	LAKI_LAKI = 'L',
-	PEREMPUAN = 'P'
+	PEREMPUAN = 'P',
 }

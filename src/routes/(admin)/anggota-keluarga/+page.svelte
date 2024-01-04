@@ -21,7 +21,7 @@
 		File,
 		Link,
 		FileText,
-		CheckCircle
+		CheckCircle,
 	} from 'lucide-svelte';
 	import { getKelurahanClient, refreshKey } from '$lib/fetching';
 	import toast, { Toaster } from 'svelte-french-toast';
@@ -58,11 +58,11 @@
 						'flex items-center',
 						form.success ? 'text-green-500' : 'text-red-500',
 					)}
-					>
+				>
 					{#if form.success}
 						<CheckCircle class="mr-3 h-4 w-4" />{form.message}
 					{:else}
-						<AlertTriangle class="mr-3 h-4 w-4"/>{form.message}
+						<AlertTriangle class="mr-3 h-4 w-4" />{form.message}
 					{/if}
 				</AlertDialog.Title>
 			</AlertDialog.Header>
@@ -121,16 +121,14 @@
 							</Table.Cell>
 							<Table.Cell class="font-medium">{anggota.nama}</Table.Cell>
 							<Table.Cell>
-								{anggota.jenisKelamin === 'L'
-									? '♂️ Laki-Laki'
-									: '♀️ Perempuan'}
+								{anggota.jenisKelamin === 'L' ? '♂️ Laki-Laki' : '♀️ Perempuan'}
 							</Table.Cell>
 							<Table.Cell>
 								{#await getKelurahanClient(anggota.tempatLahir)}
 									memuat alamat...
 								{:then kel}
 									{capitalize(kel || '{terjadi kesalahan}')} / {formatDate(
-											anggota.tanggalLahir,
+										anggota.tanggalLahir,
 									)}
 								{/await}
 							</Table.Cell>
@@ -161,27 +159,35 @@
 					<DropdownMenu.Shortcut><FileText class="h-4 w-4" /></DropdownMenu.Shortcut>
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item class="cursor-pointer" on:click={async () => {
-					const prev = selected.refKey;
-					await toast.promise(refreshRefKey(), {
-						loading: 'Memuat...',
-						success: 'Berhasil refresh ref key',
-						error: 'Gagal refresh ref key',
-					});
-					const curr = selected.refKey;
-					if (curr !== prev) {
-						await navigator.clipboard.writeText(curr || '{terjadi kesalahan}');
-						toast.success('Berhasil menyalin ref key');
-					}
-				}}>
+				<DropdownMenu.Item
+					class="cursor-pointer"
+					on:click={async () => {
+						const prev = selected.refKey;
+						await toast.promise(refreshRefKey(), {
+							loading: 'Memuat...',
+							success: 'Berhasil refresh ref key',
+							error: 'Gagal refresh ref key',
+						});
+						const curr = selected.refKey;
+						if (curr !== prev) {
+							await navigator.clipboard.writeText(curr || '{terjadi kesalahan}');
+							toast.success('Berhasil menyalin ref key');
+						}
+					}}
+				>
 					<RefreshCcw class="mr-3 h-4 w-4" />
 					<span>Refresh Ref Key & Salin</span>
 					<DropdownMenu.Shortcut><Link class="h-4 w-4" /></DropdownMenu.Shortcut>
 				</DropdownMenu.Item>
-				<DropdownMenu.Item class="cursor-pointer" on:click={async () => {
-					await navigator.clipboard.writeText(selected.refKey || '{terjadi kesalahan}');
-					toast.success('Berhasil menyalin ref key');
-				}}>
+				<DropdownMenu.Item
+					class="cursor-pointer"
+					on:click={async () => {
+						await navigator.clipboard.writeText(
+							selected.refKey || '{terjadi kesalahan}',
+						);
+						toast.success('Berhasil menyalin ref key');
+					}}
+				>
 					<Clipboard class="mr-3 h-4 w-4" />
 					<span>Salin Ref Key</span>
 					<DropdownMenu.Shortcut><Link class="h-4 w-4" /></DropdownMenu.Shortcut>
@@ -230,9 +236,9 @@
 	</DropdownMenu.Root>
 {/if}
 {#if selected}
-<form class="contents" action="?/delete" id="form-delete" method="POST">
-	<input type="hidden" name="id" bind:value={selected.id} />
-</form>
+	<form class="contents" action="?/delete" id="form-delete" method="POST">
+		<input type="hidden" name="id" bind:value={selected.id} />
+	</form>
 {/if}
 <AlertDialog.Root bind:open={showDeleteConfirm}>
 	<AlertDialog.Content>
