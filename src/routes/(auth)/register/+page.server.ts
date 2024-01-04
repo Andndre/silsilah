@@ -2,7 +2,7 @@ import { agama, anggota, keluarga, marga } from '$lib/schema';
 import { db } from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { v4 } from 'uuid';
 
@@ -58,7 +58,7 @@ export const actions: Actions = {
 				if (form.data.suami_has_ref_key != undefined && form.data.suami_has_ref_key) {
 					// Find the anggota with matching refKey
 					const result = await tx.query.anggota.findFirst({
-						where: () => eq(anggota.refKey, form.data.suami_ref_key!),
+						where: () => and(eq(anggota.refKey, form.data.suami_ref_key!), eq(anggota.jenisKelamin, 'L')),
 						columns: { id: true },
 					});
 
@@ -98,7 +98,7 @@ export const actions: Actions = {
 				if (form.data.istri_has_ref_key != undefined && form.data.istri_has_ref_key) {
 					// Find the anggota record with matching refKey
 					const result = await tx.query.anggota.findFirst({
-						where: () => eq(anggota.refKey, form.data.istri_ref_key!),
+						where: () => and(eq(anggota.refKey, form.data.istri_ref_key!), eq(anggota.jenisKelamin, 'P')),
 						columns: { id: true },
 					});
 
