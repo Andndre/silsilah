@@ -58,5 +58,8 @@
 		"tailwind-variants": "^0.1.19",
 		"uuid": "^9.0.1",
 		"zod": "^3.22.4"
-	}
+	},
+	"overrides": {
+    "semver": "^7.5.3"
+  }
 }
