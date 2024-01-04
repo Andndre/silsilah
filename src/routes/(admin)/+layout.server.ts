@@ -10,5 +10,7 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
 	}
 
 	// Return an empty object
-	return {};
+	return {
+		url: url.pathname
+	};
 };

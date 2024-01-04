@@ -120,19 +120,18 @@
 								</Avatar.Root>
 							</Table.Cell>
 							<Table.Cell class="font-medium">{anggota.nama}</Table.Cell>
-							<Table.Cell
-								>{anggota.jenisKelamin === 'L'
+							<Table.Cell>
+								{anggota.jenisKelamin === 'L'
 									? '♂️ Laki-Laki'
-									: '♀️ Perempuan'}</Table.Cell
-							>
+									: '♀️ Perempuan'}
+							</Table.Cell>
 							<Table.Cell>
 								{#await getKelurahanClient(anggota.tempatLahir)}
 									memuat alamat...
 								{:then kel}
 									{capitalize(kel || '{terjadi kesalahan}')} / {formatDate(
 											anggota.tanggalLahir,
-										)}
-									>
+									)}
 								{/await}
 							</Table.Cell>
 							<Table.Cell
