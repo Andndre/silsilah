@@ -1,9 +1,10 @@
-import { keluarga } from '$lib/schema';
+import { anggota, keluarga } from '$lib/schema';
 import { db } from '$lib/server/database';
 import { redirect } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 
 import type { PageServerLoad } from '../$types';
+import type { Actions } from './$types';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (!locals.user) {
@@ -21,8 +22,10 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 					status: true,
 					tanggalMeninggal: true,
 					tanggalLahir: true,
+					tempatLahir: true,
 					gambar: true,
 					id: true,
+					refKey: true
 				},
 			},
 		},
@@ -36,4 +39,32 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 	return {
 		pageData: query,
 	};
+};
+
+export const actions: Actions = {
+	delete: async ({ request, locals }) => {
+		const data = await request.formData();
+		const id = data.get('id');
+
+		if (!id) {
+			return {
+				success: false,
+				message: 'ID tidak ditemukan',
+			};
+		}
+
+		const [{ affectedRows }] = await db.delete(anggota).where(and(eq(anggota.id, +id), eq(anggota.keluargaAsal, locals.user!.id)));
+
+		if (affectedRows === 0) {
+			return {
+				success: false,
+				message: 'Gagal menghapus anggota (anggota tidak ada dalam keluarga)',
+			};
+		}
+
+		return {
+			success: true,
+			message: 'Anggota berhasil di hapus',
+		};
+	},
 };

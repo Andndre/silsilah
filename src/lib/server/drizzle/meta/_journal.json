@@ -1,41 +1,55 @@
 {
-	"version": "5",
-	"dialect": "mysql",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "5",
-			"when": 1704006741513,
-			"tag": "0000_deep_shard",
-			"breakpoints": true
-		},
-		{
-			"idx": 1,
-			"version": "5",
-			"when": 1704007898594,
-			"tag": "0001_new_vertigo",
-			"breakpoints": true
-		},
-		{
-			"idx": 2,
-			"version": "5",
-			"when": 1704084158604,
-			"tag": "0002_sudden_quicksilver",
-			"breakpoints": true
-		},
-		{
-			"idx": 3,
-			"version": "5",
-			"when": 1704084658677,
-			"tag": "0003_sticky_darkhawk",
-			"breakpoints": true
-		},
-		{
-			"idx": 4,
-			"version": "5",
-			"when": 1704123354224,
-			"tag": "0004_silky_unus",
-			"breakpoints": true
-		}
-	]
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1704006741513,
+      "tag": "0000_deep_shard",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1704007898594,
+      "tag": "0001_new_vertigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1704084158604,
+      "tag": "0002_sudden_quicksilver",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1704084658677,
+      "tag": "0003_sticky_darkhawk",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1704123354224,
+      "tag": "0004_silky_unus",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1704171968238,
+      "tag": "0005_warm_maria_hill",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1704172075427,
+      "tag": "0006_gigantic_winter_soldier",
+      "breakpoints": true
+    }
+  ]
 }

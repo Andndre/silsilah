@@ -29,3 +29,8 @@ export type Alamat = {
 	kecamatan: string;
 	kelurahan: string;
 };
+
+export enum JenisKelamin {
+	LAKI_LAKI = 'L',
+	PEREMPUAN = 'P'
+}

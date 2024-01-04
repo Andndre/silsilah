@@ -23,7 +23,7 @@
 					<Popover.Trigger>
 						<Avatar class="cursor-pointer">
 							<AvatarImage
-								src="https://avatars.githubusercontent.com/u/81848639?v=4"
+								src="/images/profile-L.png"
 								alt="user avatar"
 							/>
 							<AvatarFallback>AN</AvatarFallback>
@@ -33,7 +33,7 @@
 						<ul class="flex flex-col">
 							<li>
 								<a
-									href="/settings/profile"
+									href="/#"
 									class="flex px-4 py-4 items-center gap-3 transition-all hover:bg-accent"
 								>
 									<span>

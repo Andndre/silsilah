@@ -30,7 +30,7 @@ export const anggota = mysqlTable('anggota', {
 	keluargaAsal: int('keluarga_asal'),
 	status: mysqlEnum('status', ['BM', 'M']).default('BM').notNull(), // BM: Belum menikah, M: Menikah
 	// Jika = M, berarti pasti ada pada tabel keluarga (sebagai suami atau istri)
-	gambar: varchar('foto', { length: 25 }),
+	gambar: varchar('foto', { length: 40 }),
 });
 
 export const keluarga = mysqlTable('keluarga', {
@@ -58,7 +58,7 @@ export const cerita = mysqlTable('cerita', {
 	judul: varchar('judul', { length: 200 }).notNull(),
 	idAnggota: int('id_anggota')
 		.notNull()
-		.references(() => anggota.id, { onDelete: 'cascade' }),
+		.references(() => anggota.id, { onDelete: 'cascade', onUpdate: 'cascade'  }),
 	deskripsi: text('deskripsi').notNull(),
 	tahun: int('tahun').notNull(),
 	tahunAkhir: int('tahun_akhir'),
@@ -68,8 +68,8 @@ export const gambarCerita = mysqlTable('gambar_cerita', {
 	id: int('id').autoincrement().notNull().primaryKey(),
 	cerita: int('cerita')
 		.notNull()
-		.references(() => cerita.id, { onDelete: 'cascade' }),
-	gambar: varchar('gambar', { length: 25 }), // idAnggota-idCerita.png
+		.references(() => cerita.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+	gambar: varchar('gambar', { length: 40 }), // idAnggota-idCerita.png
 });
 
 export const relasiAnggota = relations(anggota, ({ one }) => ({

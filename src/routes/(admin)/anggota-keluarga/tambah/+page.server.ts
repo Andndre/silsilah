@@ -3,6 +3,7 @@ import { db } from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
 import { eq } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms/server';
+import { v4 } from 'uuid';
 
 import type { Actions, PageServerLoad } from './$types';
 import { formSchema } from './schema';
@@ -93,6 +94,7 @@ export const actions: Actions = {
 						jenisKelamin: form.data.jenis_kelamin,
 						tanggalLahir: new Date(form.data.tanggal_lahir),
 						tempatLahir: form.data.tempat_lahir,
+						refKey: v4()
 					});
 				}
 			});
