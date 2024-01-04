@@ -2,7 +2,7 @@ import { agama, anggota, keluarga, marga } from '$lib/schema';
 import { db } from '$lib/server/database';
 import { fail, redirect } from '@sveltejs/kit';
 import bcrypt from 'bcrypt';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, or } from 'drizzle-orm';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { v4 } from 'uuid';
 
@@ -49,6 +49,7 @@ export const actions: Actions = {
 		// }
 
 		let error = '';
+		let margaAsal: number | undefined = undefined;
 
 		try {
 			await db.transaction(async (tx) => {
@@ -60,11 +61,19 @@ export const actions: Actions = {
 					const result = await tx.query.anggota.findFirst({
 						where: () => and(eq(anggota.refKey, form.data.suami_ref_key!), eq(anggota.jenisKelamin, 'L')),
 						columns: { id: true },
+						with: {
+							keluargaAsal: {
+								columns: {
+									marga: true
+								}
+							}
+						}
 					});
 
 					// If a matching anggota is found
 					if (result) {
 						idAyah = result.id; // Set idAyah to the found anggota's id
+						margaAsal = result.keluargaAsal?.marga;
 					} else {
 						// If no matching anggota is found, return an error
 						error = 'Data ayah tidak ditemukan';
@@ -117,7 +126,7 @@ export const actions: Actions = {
 						!form.data.istri_tanggal_lahir ||
 						!form.data.istri_nama
 					) {
-						error = 'Data ibu tidak lengkap';
+						error = 'Data ibu tidak lengkap #istri_agama|istri_tempat_lahir|istri_tanggal_lahir|istri_nama';
 						return;
 					}
 
@@ -135,13 +144,17 @@ export const actions: Actions = {
 
 				if (
 					!form.data.alamat_tinggal ||
-					!form.data.marga ||
 					!form.data.tanggal_menikah ||
 					!form.data.username ||
 					!form.data.password ||
 					!form.data.password_konfirmasi
 				) {
-					error = 'Data keluarga tidak lengkap';
+					error = 'Data keluarga tidak lengkap #alamat|tanggal_menikah|username|password|password_konfirmasi';
+					return;
+				}
+
+				if (!form.data.suami_has_ref_key && !form.data.marga) {
+					error = 'Data keluarga tidak lengkap #marga';
 					return;
 				}
 
@@ -156,11 +169,16 @@ export const actions: Actions = {
 					suami: idAyah,
 					istri: idIbu,
 					alamat: form.data.alamat_tinggal,
-					marga: form.data.marga,
+					marga: margaAsal || form.data.marga!,
 					tanggal_menikah: new Date(form.data.tanggal_menikah),
 					username: form.data.username,
 					refreshSession: v4(),
 				});
+
+				await tx.update(anggota).set({
+					status: 'M',
+				}).where(or(eq(anggota.id, idAyah), eq(anggota.id, idIbu)));
+
 			});
 
 			if (error) {
