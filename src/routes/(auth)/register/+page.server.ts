@@ -41,13 +41,6 @@ export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, formSchema);
 
-		// // If the form is not valid, return an error response
-		// if (!form.valid) {
-		// 	return fail(400, {
-		// 		form,
-		// 	});
-		// }
-
 		let error = '';
 		let margaAsal: number | undefined = undefined;
 
@@ -77,6 +70,7 @@ export const actions: Actions = {
 					} else {
 						// If no matching anggota is found, return an error
 						error = 'Data ayah tidak ditemukan';
+						tx.rollback();
 						return;
 					}
 				} else {
@@ -87,6 +81,7 @@ export const actions: Actions = {
 						!form.data.suami_tanggal_lahir
 					) {
 						error = 'Data ayah tidak lengkap';
+						tx.rollback();
 						return;
 					}
 
@@ -117,6 +112,7 @@ export const actions: Actions = {
 					} else {
 						// If no matching record is found, return an error message
 						error = 'Data ibu tidak ditemukan';
+						tx.rollback();
 						return;
 					}
 				} else {
@@ -127,6 +123,7 @@ export const actions: Actions = {
 						!form.data.istri_nama
 					) {
 						error = 'Data ibu tidak lengkap #istri_agama|istri_tempat_lahir|istri_tanggal_lahir|istri_nama';
+						tx.rollback();
 						return;
 					}
 
@@ -150,16 +147,19 @@ export const actions: Actions = {
 					!form.data.password_konfirmasi
 				) {
 					error = 'Data keluarga tidak lengkap #alamat|tanggal_menikah|username|password|password_konfirmasi';
+					tx.rollback();
 					return;
 				}
 
 				if (!form.data.suami_has_ref_key && !form.data.marga) {
 					error = 'Data keluarga tidak lengkap #marga';
+					tx.rollback();
 					return;
 				}
 
 				if (form.data.password !== form.data.password_konfirmasi) {
 					error = 'Password tidak sama';
+					tx.rollback();
 					return;
 				}
 
@@ -186,7 +186,6 @@ export const actions: Actions = {
 				return message(form, error);
 			}
 		} catch (err) {
-			// TODO: delete data anggota baru
 			console.error(err);
 			// Return an error response if an error occurs
 			return fail(500, {
