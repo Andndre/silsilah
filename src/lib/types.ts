@@ -44,10 +44,19 @@ export type Photo = {
 	photoUrl: string;
 };
 
-export type FamilyNode = Coords & {
+export type ChildNode = Coords & {
 	name: string;
 	birthDate: string;
 } & Photo;
+
+export type ParentNode = Coords & {
+	namaAyah: string;
+	photoAyah: string;
+	birthDateAyah: string;
+	namaIbu: string;
+	photoIbu: string;
+	birthDateIbu: string;
+}
 
 export type Size2D = {
 	width: number,

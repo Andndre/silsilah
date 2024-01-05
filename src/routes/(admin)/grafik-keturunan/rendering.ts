@@ -1,11 +1,11 @@
-import type { Circle, FamilyNode, Plane2D, RoundedPhoto, RoundedPlane2D, Size2D, Text } from '$lib/types';
+import type { Circle, ChildNode, Plane2D, RoundedPhoto, RoundedPlane2D, Size2D, Text, ParentNode } from '$lib/types';
 
-export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, drawImage: boolean) {
+export function drawChildNode(node: ChildNode, ctx: CanvasRenderingContext2D, drawImage: boolean) {
 	const cardWidth = 300;
 	const cardHeight = 80;
 
 	// Draw rounded card
-	roundedRectagle(
+	drawRoundedRectagle(
 		{
 			...node,
 			radius: 10,
@@ -18,7 +18,7 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, d
 	const padding = 5;
 
 	if (drawImage) {
-		roundedImage(
+		drawRoundedImage(
 			{
 				x: node.x + padding,
 				y: node.y + padding,
@@ -42,7 +42,7 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, d
 		size: titleSize,
 		style: 'bold',
 		x: node.x + spaceTakenOnLeft + padding,
-		y: node.y + padding * 3
+		y: node.y + padding * 5
 	}, ctx);
 
 	// Draw birth date
@@ -52,7 +52,7 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, d
 		size: 10,
 		style: 'italic',
 		x: node.x + spaceTakenOnLeft + padding,
-		y: node.y + padding * 4 + titleSize
+		y: node.y + padding * 6 + titleSize
 	}, ctx);
 
 	// Returning the card plane2d
@@ -62,6 +62,33 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, d
 		x: node.x,
 		y: node.y
 	} as Plane2D;
+}
+
+export function drawParentNode(node: ParentNode, ctx: CanvasRenderingContext2D, drawImage: boolean) {
+	const padding = 5;
+	const ayah = drawChildNode({
+		name: node.namaAyah,
+		birthDate: node.birthDateAyah,
+		photoUrl: node.photoAyah,
+		x: node.x + padding,
+		y: node.y + padding
+	}, ctx, drawImage);
+
+	const ibu = drawChildNode({
+		name: node.namaIbu,
+		birthDate: node.birthDateIbu,
+		photoUrl: node.photoIbu,
+		x: node.x + padding,
+		y: node.y + ayah.height + padding * 2
+	}, ctx, drawImage);
+
+	drawRoundedRectagle({
+		x: node.x,
+		y: node.y,
+		width: padding * 2 + ayah.width,
+		height: padding * 3 + ayah.height * 2,
+		radius: 16
+	}, ctx, false);
 }
 
 export function scatterDots(size: Size2D, ctx: CanvasRenderingContext2D) {
@@ -85,18 +112,18 @@ export function text(t: Text, ctx: CanvasRenderingContext2D) {
 	ctx.font = `${t.style} ${t.size}px Arial`;
 	ctx.textAlign = 'left';
 	ctx.textBaseline = 'top';
-	ctx.fillText(t.text, t.x, t.y);
+	ctx.fillText(t.text, Math.round(t.x), Math.round(t.y));
 	ctx.restore();
 }
 
-export function roundedImage(p: RoundedPhoto, ctx: CanvasRenderingContext2D) {
+export function drawRoundedImage(p: RoundedPhoto, ctx: CanvasRenderingContext2D) {
 	let image = new Image();
 	image.src = p.photoUrl;
 	image.onload = () => {
 		ctx.save();
 		roundedPath({ ...p }, ctx);
 		ctx.clip();
-		ctx.drawImage(image, p.x, p.y, p.width, p.height);
+		ctx.drawImage(image, Math.round(p.x), Math.round(p.y), Math.ceil(p.width), Math.ceil(p.height));
 		ctx.restore();
 	};
 }
@@ -107,23 +134,23 @@ export function drawCircle(c: Circle, ctx: CanvasRenderingContext2D) {
 	ctx.fill();
 }
 
-export function roundedRectagle(r: RoundedPlane2D, ctx: CanvasRenderingContext2D) {
+export function drawRoundedRectagle(r: RoundedPlane2D, ctx: CanvasRenderingContext2D, fill = true) {
 	ctx.fillStyle = 'white';
 	roundedPath(r, ctx);
 	ctx.stroke();
-	ctx.fill();
+	if (fill) ctx.fill();
 }
 
 export function roundedPath(c: RoundedPlane2D, ctx: CanvasRenderingContext2D) {
 	ctx.beginPath();
-	ctx.moveTo(c.x + c.radius, c.y);
-	ctx.lineTo(c.x + c.width - c.radius, c.y);
-	ctx.quadraticCurveTo(c.x + c.width, c.y, c.x + c.width, c.y + c.radius);
-	ctx.lineTo(c.x + c.width, c.y + c.height - c.radius);
-	ctx.quadraticCurveTo(c.x + c.width, c.y + c.height, c.x + c.width - c.radius, c.y + c.height);
-	ctx.lineTo(c.x + c.radius, c.y + c.height);
-	ctx.quadraticCurveTo(c.x, c.y + c.height, c.x, c.y + c.height - c.radius);
-	ctx.lineTo(c.x, c.y + c.radius);
-	ctx.quadraticCurveTo(c.x, c.y, c.x + c.radius, c.y);
+	ctx.moveTo(Math.round(c.x + c.radius), Math.round(c.y));
+	ctx.lineTo(Math.round(c.x + c.width - c.radius), Math.round(c.y));
+	ctx.quadraticCurveTo(Math.round(c.x + c.width), Math.round(c.y), Math.round(c.x + c.width), Math.round(c.y + c.radius));
+	ctx.lineTo(Math.round(c.x + c.width), Math.round(c.y + c.height - c.radius));
+	ctx.quadraticCurveTo(Math.round(c.x + c.width), Math.round(c.y + c.height), Math.round(c.x + c.width - c.radius), Math.round(c.y + c.height));
+	ctx.lineTo(Math.round(c.x + c.radius), Math.round(c.y + c.height));
+	ctx.quadraticCurveTo(Math.round(c.x), Math.round(c.y + c.height), Math.round(c.x), Math.round(c.y + c.height - c.radius));
+	ctx.lineTo(Math.round(c.x), Math.round(c.y + c.radius));
+	ctx.quadraticCurveTo(Math.round(c.x), Math.round(c.y), Math.round(c.x + c.radius), Math.round(c.y));
 	ctx.closePath();
 }
