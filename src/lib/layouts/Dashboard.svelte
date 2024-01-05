@@ -70,7 +70,7 @@
 				</Popover.Root>
 			</div>
 		</header>
-		<div class="flex-1 px-4 md:px-8 py-8">
+		<div class="flex-1">
 			<slot />
 		</div>
 		<footer class="px-4 md:px-8 py-4 border-t">

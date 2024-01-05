@@ -45,7 +45,6 @@
 >
 	{#key data.url}
 		<div
-			class="max-w-[1000px] mx-auto"
 			in:fly={{ y: 100, duration: 300, delay: 300 }}
 			out:fly={{ duration: 300 }}
 		>

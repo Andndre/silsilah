@@ -23,9 +23,7 @@ export async function GET({ request, locals }) {
 			{ status: 400 },
 		);
 	}
-
-	console.log('changing ref key of ' + locals.user.id + ', anggota id = ' + id);
-
+	
 	const newRefKey = v4();
 
 	await db

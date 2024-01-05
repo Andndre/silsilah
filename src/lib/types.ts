@@ -34,3 +34,8 @@ export enum JenisKelamin {
 	LAKI_LAKI = 'L',
 	PEREMPUAN = 'P',
 }
+
+export type Coords = {
+	x: number;
+	y: number;
+}
