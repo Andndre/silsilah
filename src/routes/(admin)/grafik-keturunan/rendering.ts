@@ -1,6 +1,6 @@
-import type { FamilyNode, Plane2D, RoundedPhoto, RoundedPlane2D, Text } from '$lib/types';
+import type { Circle, FamilyNode, Plane2D, RoundedPhoto, RoundedPlane2D, Size2D, Text } from '$lib/types';
 
-export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D) {
+export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D, drawImage: boolean) {
 	const cardWidth = 300;
 	const cardHeight = 80;
 
@@ -17,17 +17,19 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D) {
 
 	const padding = 5;
 
-	roundedImage(
-		{
-			x: node.x + padding,
-			y: node.y + padding,
-			height: cardHeight - 2 * padding,
-			width: cardHeight - 2 * padding,
-			radius: 5,
-			photoUrl: node.photoUrl,
-		},
-		ctx,
-	);
+	if (drawImage) {
+		roundedImage(
+			{
+				x: node.x + padding,
+				y: node.y + padding,
+				height: cardHeight - 2 * padding,
+				width: cardHeight - 2 * padding,
+				radius: 5,
+				photoUrl: node.photoUrl,
+			},
+			ctx,
+		);
+	}
 
 	const spaceTakenOnLeft = cardHeight;
 
@@ -62,6 +64,21 @@ export function drawChildNode(node: FamilyNode, ctx: CanvasRenderingContext2D) {
 	} as Plane2D;
 }
 
+export function scatterDots(size: Size2D, ctx: CanvasRenderingContext2D) {
+	ctx.save();
+	ctx.fillStyle = 'rgba(0.5, 0.5, 0.5, 0.05)'
+	for (let row = 0; row <= size.height; row += 50) {
+		for(let col = 0; col <= size.width; col += 50) {
+			drawCircle({
+				x: col,
+				y: row,
+				radius: 5
+			}, ctx);
+		}
+	}
+	ctx.restore();
+}
+
 export function text(t: Text, ctx: CanvasRenderingContext2D) {
 	ctx.save();
 	ctx.fillStyle = t.color;
@@ -84,9 +101,17 @@ export function roundedImage(p: RoundedPhoto, ctx: CanvasRenderingContext2D) {
 	};
 }
 
+export function drawCircle(c: Circle, ctx: CanvasRenderingContext2D) {
+	ctx.beginPath();
+	ctx.arc(c.x, c.y, c.radius, 0, 2 * Math.PI);
+	ctx.fill();
+}
+
 export function roundedRectagle(r: RoundedPlane2D, ctx: CanvasRenderingContext2D) {
+	ctx.fillStyle = 'white';
 	roundedPath(r, ctx);
 	ctx.stroke();
+	ctx.fill();
 }
 
 export function roundedPath(c: RoundedPlane2D, ctx: CanvasRenderingContext2D) {

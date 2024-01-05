@@ -4,7 +4,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { drawChildNode } from './rendering';
+	import { drawChildNode, scatterDots } from './rendering';
 	
 	let screenWidth = 0;
 	let screenHeight = 0;
@@ -45,6 +45,11 @@
 	$: {
 		render = ({ context, width, height }) => {
 			context.clearRect(0, 0, width, height);
+
+			scatterDots({
+				width, height
+			}, context);
+
 			context.setTransform(zoom, 0, 0, zoom, position.x, position.y);
 
 			drawChildNode({
@@ -53,7 +58,7 @@
 				photoUrl: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
 				x: 0,
 				y: 0
-			}, context);
+			}, context, !isPanning);
 		};
 	}
 

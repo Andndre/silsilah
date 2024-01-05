@@ -49,14 +49,18 @@ export type FamilyNode = Coords & {
 	birthDate: string;
 } & Photo;
 
-export type Plane2D = Coords & {
+export type Size2D = {
 	width: number,
 	height: number
 };
 
-export type RoundedPlane2D = Plane2D & {
+export type Plane2D = Coords & Size2D;
+
+export type Rounded = {
 	radius: number;
-};
+}
+
+export type RoundedPlane2D = Plane2D & Rounded;
 
 export type RoundedPhoto = RoundedPlane2D & Photo;
 
@@ -66,3 +70,7 @@ export type Text = {
 	color: string;
 	style: string;
 } & Coords;
+
+export type Circle = Coords & {
+	radius: number;
+};
