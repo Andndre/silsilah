@@ -13,13 +13,7 @@
 	let isPanning = false;
 	let lastMousePosition = { x: 0, y: 0 } as Coords;
 
-	$: console.log(`isPaning: ${isPanning}`);
-	$: console.log(`lastMousePosition: ${JSON.stringify(lastMousePosition)}`);
-
 	let canvas: HTMLCanvasElement | null = null;
-	onMount(() => {
-		canvas = browser ? document.getElementsByTagName('canvas').item(0) : null;
-	});
 
 	const LG_SCREEN = 1024;
 	const NAV_BAR_HEIGHT = 56.8;
@@ -37,19 +31,27 @@
 	let zoom = 1;
 	let position = { x: 0, y: 0 };
 
-	$: console.log(`zoom: ${zoom}`);
-	$: console.log(`position: ${JSON.stringify(position)}`);
+	onMount(() => {
+		canvas = browser ? document.getElementsByTagName('canvas').item(0) : null;
+		if (!canvas) return;
+		console.log(canvas);
+		setTimeout(() => {
+			position = { x: canvasWidth / 2, y: canvasHeight / 2 };
+		}, 50);
+	});
 
 	let render: Render;
 	$: {
 		render = ({ context, width, height }) => {
 			context.clearRect(0, 0, width, height);
 
-			context.setTransform(zoom, 0, 0, zoom, position.x + width / 2, position.y + height / 2);
+			context.setTransform(zoom, 0, 0, zoom, position.x, position.y);
 
 			context.beginPath();
-			context.moveTo(0, 0);
+			context.moveTo(-10, -40);
 			context.lineTo(200, 50);
+			context.lineTo(0, 200);
+			context.lineTo(0, 0);
 			context.stroke();
 		};
 	}
@@ -74,9 +76,10 @@
 			position.x += movementX;
 			position.y += movementY;
 		}
-		
+
 		lastMousePosition.x = event.clientX;
 		lastMousePosition.y = event.clientY;
+		
 	}
 
 	function onMouseUp(event: MouseEvent) {
@@ -89,29 +92,18 @@
 
 	function onWheel(event: WheelEvent) {
 		const zoomFactor = 1.1;
-		const wheelDelta = event.deltaY;
+    const wheelDelta = event.deltaY;
 
-		// Calculate the new zoom level
 		if (wheelDelta > 0) {
-			zoom /= zoomFactor;
+				zoom /= zoomFactor;
 		} else {
-			zoom *= zoomFactor;
+				zoom *= zoomFactor;
 		}
 
-		if (!canvas) {
-			console.log('canvas not found');
-			return;
-		}
-
-		// Get the mouse position relative to the canvas
-		const rect = canvas.getBoundingClientRect();
-		const mouseX = event.clientX - rect.left;
-		const mouseY = event.clientY - rect.top;
-
-		// Adjust the position to zoom in/out at the mouse position
-		position.x -= (mouseX - position.x) * (zoomFactor - 1);
-		position.y -= (mouseY - position.y) * (zoomFactor - 1);
+    // Prevent the default behavior of the wheel event
+    event.preventDefault();
 	}
+
 </script>
 
 <svelte:window bind:innerWidth={screenWidth} bind:innerHeight={screenHeight} />
@@ -129,7 +121,7 @@
 		<Layer {render} />
 	</Canvas>
 	<Button on:click={() => {
-		position = { x: 0, y: 0 };
+		position = { x: canvasWidth / 2, y: canvasHeight / 2 };
 		zoom = 1;
 	}} class="absolute right-5 bottom-5">Reset zoom</Button>
 </div>
