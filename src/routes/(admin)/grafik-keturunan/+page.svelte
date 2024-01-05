@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Canvas, Layer, type Render } from 'svelte-canvas';
-	import type { Coords } from '$lib/types';
+	import type { Coords, FamilyNode } from '$lib/types';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { drawChildNode } from './rendering';
 	
 	let screenWidth = 0;
 	let screenHeight = 0;
@@ -44,15 +45,15 @@
 	$: {
 		render = ({ context, width, height }) => {
 			context.clearRect(0, 0, width, height);
-
 			context.setTransform(zoom, 0, 0, zoom, position.x, position.y);
 
-			context.beginPath();
-			context.moveTo(-10, -40);
-			context.lineTo(200, 50);
-			context.lineTo(0, 200);
-			context.lineTo(0, 0);
-			context.stroke();
+			drawChildNode({
+				name: 'Anak Agung Gede Andre Kusuma',
+				birthDate: '7 Nov 2004',
+				photoUrl: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+				x: 0,
+				y: 0
+			}, context);
 		};
 	}
 
