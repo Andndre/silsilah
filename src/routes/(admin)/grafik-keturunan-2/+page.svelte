@@ -95,7 +95,9 @@
 		const allElementContainer = document.getElementById('all-element') as HTMLDivElement;
 		
 		const mouseDownHandler = function(e: MouseEvent) {
-			if(e.button === 1) return false;
+			if(e.button === 1) {
+				e.preventDefault();
+			}
 			container.style.cursor = 'grabbing';
 			container.style.userSelect = 'none';
 			pos = {
