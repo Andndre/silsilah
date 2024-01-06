@@ -1,154 +1,128 @@
 <script lang="ts">
-	import { Canvas, Layer, type Render } from 'svelte-canvas';
-	import type { Coords, ChildNode } from '$lib/types';
-	import { browser } from '$app/environment';
+	import type { FamilyTreeSchema } from '$lib/types';
 	import { onMount } from 'svelte';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { drawChildNode, drawParentNode, scatterDots } from './rendering';
+	import Node from './Node.svelte';
 
-	let screenWidth = 0;
-	let screenHeight = 0;
-	let canvasWidth = 0;
-	let canvasHeight = 0;
-
-	let isPanning = false;
-	let lastMousePosition = { x: 0, y: 0 } as Coords;
-
-	let canvas: HTMLCanvasElement | null = null;
-
-	const LG_SCREEN = 1024;
-	const NAV_BAR_HEIGHT = 56.8;
-	const MOBILE_SIDEBAR_HEIGHT = 60;
-	const LG_SIDEBAR_WIDTH = 250;
-
-	$: if (screenWidth < LG_SCREEN) {
-		canvasWidth = screenWidth;
-		canvasHeight = screenHeight - NAV_BAR_HEIGHT - MOBILE_SIDEBAR_HEIGHT;
-	} else {
-		canvasWidth = screenWidth - LG_SIDEBAR_WIDTH;
-		canvasHeight = screenHeight - NAV_BAR_HEIGHT * 2;
-	}
-
-	let zoom = 1;
-	let position = { x: 0, y: 0 };
+	const familyTreeData: FamilyTreeSchema = {
+		type: 'parent',
+		namaAyah: "John Doe",
+		namaIbu: "Jane Doe",
+		tahunLahirAyah: "1970",
+		tahunLahirIbu: "1975",
+		fotoAyah: "url_foto_ayah",
+		fotoIbu: "url_foto_ibu",
+		id: '1',
+		children: [
+			{
+				type: 'child',
+				nama: "Child 1",
+				tahunLahir: "2000",
+				foto: "url_foto_child1",
+				id: '2'
+			},
+			{
+				type: 'parent',
+				namaAyah: "John Doe",
+				namaIbu: "Jane Doe",
+				tahunLahirAyah: "1970",
+				tahunLahirIbu: "1975",
+				fotoAyah: "url_foto_ayah",
+				fotoIbu: "url_foto_ibu",
+				id: '7',
+				children: [
+					{
+						type: 'child',
+						nama: "Grandchild 1",
+						tahunLahir: "2025",
+						foto: "url_foto_grandchild1",
+						id: '3'
+					},
+					{
+						type: 'child',
+						nama: "Grandchild 1",
+						tahunLahir: "2025",
+						foto: "url_foto_grandchild1",
+						id: '4'
+					},
+				],
+			},
+			{
+				type: 'child',
+				nama: "Hello world asa sdas fsd dasads",
+				tahunLahir: "2010",
+				foto: "url_foto_child3",
+				id: '5'
+			},
+			{
+				type: 'child',
+				nama: "Child 3",
+				tahunLahir: "2010",
+				foto: "url_foto_child3",
+				id: '6'
+			},
+		],
+	};
 
 	onMount(() => {
-		canvas = browser ? document.getElementsByTagName('canvas').item(0) : null;
-		if (!canvas) return;
-		console.log(canvas);
-		setTimeout(() => {
-			position = { x: canvasWidth / 2, y: canvasHeight / 2 };
-		}, 50);
+		let pos = { top: 0, left: 0, x: 0, y: 0 };
+		let zoom = 1;
+		const ZOOM_SPEED = 0.1;
+		const container = document.getElementById('grafik-container') as HTMLDivElement;
+		const allElementContainer = document.getElementById('all-element') as HTMLDivElement;
+		
+		const mouseDownHandler = function(e: MouseEvent) {
+			if(e.button === 1) {
+				e.preventDefault();
+			}
+			container.style.cursor = 'grabbing';
+			container.style.userSelect = 'none';
+			pos = {
+        left: container.scrollLeft,
+        top: container.scrollTop,
+        x: e.clientX,
+        y: e.clientY,
+			};
+
+			document.addEventListener('mousemove', mouseMoveHandler);
+			document.addEventListener('mouseup', mouseUpHandler);
+		};
+		const mouseMoveHandler = function (e: MouseEvent) {
+			const dx = e.clientX - pos.x;
+			const dy = e.clientY - pos.y;
+
+			container.scrollTop = pos.top - dy;
+			container.scrollLeft = pos.left - dx;
+		};
+		const mouseUpHandler = function () {
+			container.style.removeProperty('user-select');
+			document.removeEventListener('mousemove', mouseMoveHandler);
+			document.removeEventListener('mouseup', mouseUpHandler);
+			container.style.cursor = 'grab';
+		};
+		const mouseWheelHandler = (e: WheelEvent) => {
+			e.preventDefault();
+			if (!e.ctrlKey) return;
+			const mouseX = e.clientX - container.getBoundingClientRect().left;
+			const mouseY = e.clientY - container.getBoundingClientRect().top;
+			if (e.deltaY > 0) {
+				zoom -= ZOOM_SPEED;
+			} else {
+				zoom += ZOOM_SPEED;
+			}
+			allElementContainer.style.transform = `scale(${zoom})`;
+			allElementContainer.style.transformOrigin = `${mouseX}px ${mouseY}px`;
+		};
+		
+		container.addEventListener('mousedown', mouseDownHandler);
+		container.addEventListener('wheel', mouseWheelHandler);
 	});
 
-	let render: Render;
-	$: {
-		render = ({ context, width, height }) => {
-			context.clearRect(0, 0, width, height);
-
-			scatterDots(
-				{
-					width,
-					height,
-				},
-				context,
-			);
-
-			context.setTransform(zoom, 0, 0, zoom, position.x, position.y);
-
-			// drawChildNode({
-			// 	name: 'Anak Agung Gede Andre Kusuma',
-			// 	birthDate: '7 Nov 2004',
-			// 	photoUrl: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
-			// 	x: 0,
-			// 	y: 0
-			// }, context, !isPanning);
-
-			drawParentNode(
-				{
-					namaAyah: 'test',
-					birthDateAyah: 'test',
-					birthDateIbu: 'test',
-					namaIbu: 'test',
-					photoAyah:
-						'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
-					photoIbu: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
-					x: 0,
-					y: 0,
-				},
-				context,
-				!isPanning,
-			);
-		};
-	}
-
-	function onMouseDown(event: MouseEvent) {
-		if (event.button === 1) {
-			event.preventDefault();
-			isPanning = true;
-			lastMousePosition = { x: event.clientX, y: event.clientY };
-			if (!canvas) return;
-			canvas.style.cursor = 'grab';
-		}
-	}
-
-	function onMouseMove(event: MouseEvent) {
-		if (isPanning) {
-			// Get the mouse movement
-			const movementX = event.clientX - lastMousePosition.x;
-			const movementY = event.clientY - lastMousePosition.y;
-
-			// Update the position based on the mouse movement
-			position.x += movementX;
-			position.y += movementY;
-		}
-
-		lastMousePosition.x = event.clientX;
-		lastMousePosition.y = event.clientY;
-	}
-
-	function onMouseUp(event: MouseEvent) {
-		if (event.button === 1) {
-			isPanning = false;
-			if (!canvas) return;
-			canvas.style.cursor = 'default';
-		}
-	}
-
-	function onWheel(event: WheelEvent) {
-		const zoomFactor = 1.1;
-		const wheelDelta = event.deltaY;
-
-		if (wheelDelta > 0) {
-			zoom /= zoomFactor;
-		} else {
-			zoom *= zoomFactor;
-		}
-
-		// Prevent the default behavior of the wheel event
-		event.preventDefault();
-	}
 </script>
 
-<svelte:window bind:innerWidth={screenWidth} bind:innerHeight={screenHeight} />
-
-<div class="relative">
-	<Canvas
-		bind:width={canvasWidth}
-		height={canvasHeight}
-		class="max-w-full bg:white dark:bg-black"
-		on:mousedown={onMouseDown}
-		on:mousemove={onMouseMove}
-		on:mouseup={onMouseUp}
-		on:wheel={onWheel}
-	>
-		<Layer {render} />
-	</Canvas>
-	<Button
-		on:click={() => {
-			position = { x: canvasWidth / 2, y: canvasHeight / 2 };
-			zoom = 1;
-		}}
-		class="absolute right-5 bottom-5">Reset zoom</Button
-	>
+<div id="grafik-container" class="relative grid items-center p-10 max-h-[calc(100vh-120px)] lg:max-w-[calc(100vw-260px)] max-w-[calc(100vw-10px)] overflow-x-scroll bg-white" style="background-image: radial-gradient(rgb(200,200,200) 2px, transparent 0); background-position: -19px -19px; background-size: 40px 40px;">
+	<div id="all-element" >
+		<Node schema={familyTreeData} />
+		<!-- <Connections schema={familyTreeData}/> -->
+	</div>
 </div>
+

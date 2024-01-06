@@ -88,7 +88,8 @@ export type Child = {
 	type: 'child',
 	nama: string,
 	tahunLahir: string,
-	foto: string
+	foto: string,
+	id: string,
 }
 
 export type FamilyTreeSchema = {
@@ -99,5 +100,6 @@ export type FamilyTreeSchema = {
 	tahunLahirIbu: string,
 	fotoAyah: string,
 	fotoIbu: string,
-	children: (Child | FamilyTreeSchema)[]
+	children: (Child | FamilyTreeSchema)[],
+	id: string,
 }
