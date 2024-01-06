@@ -20,7 +20,7 @@
 
 <aside
 	class={cn(
-		'fixed lg:sticky lg:top-0 w-full bottom-0 bg-card-foreground dark:bg-black dark:text-white text-card border-r shadow-xl lg:min-h-screen lg:max-w-[250px] p-4 z-[100] flex flex-col lg:h-full',
+		'fixed lg:sticky lg:top-0 w-full bottom-0 bg-card-foreground dark:bg-black dark:text-white text-card border-r shadow-xl lg:min-h-screen lg:max-w-[250px] lg:min-w-[250px] p-4 z-[100] flex flex-col lg:h-full',
 	)}
 >
 	<div class="hidden lg:flex flex-col items-center mt-8">

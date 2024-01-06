@@ -83,3 +83,21 @@ export type Text = {
 export type Circle = Coords & {
 	radius: number;
 };
+
+export type Child = {
+	type: 'child',
+	nama: string,
+	tahunLahir: string,
+	foto: string
+}
+
+export type FamilyTreeSchema = {
+	type: 'parent',
+	namaAyah: string,
+	namaIbu: string,
+	tahunLahirAyah: string,
+	tahunLahirIbu: string,
+	fotoAyah: string,
+	fotoIbu: string,
+	children: (Child | FamilyTreeSchema)[]
+}
