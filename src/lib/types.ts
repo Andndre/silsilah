@@ -33,7 +33,7 @@ export type Alamat = {
 export enum JenisKelamin {
 	LAKI_LAKI = 'L',
 	PEREMPUAN = 'P',
-};
+}
 
 export type Coords = {
 	x: number;
@@ -56,18 +56,18 @@ export type ParentNode = Coords & {
 	namaIbu: string;
 	photoIbu: string;
 	birthDateIbu: string;
-}
+};
 
 export type Size2D = {
-	width: number,
-	height: number
+	width: number;
+	height: number;
 };
 
 export type Plane2D = Coords & Size2D;
 
 export type Rounded = {
 	radius: number;
-}
+};
 
 export type RoundedPlane2D = Plane2D & Rounded;
 

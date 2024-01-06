@@ -1,6 +1,6 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table';
-	
+
 	import Maxw from './maxw.svelte';
 
 	import { H1 } from '$lib/components/typography/index';
@@ -15,6 +15,7 @@
 		? ` (${pageData.marga_.keterangan})`
 		: '';
 </script>
+
 <Maxw>
 	<H1>Informasi Keluarga</H1>
 	<div class="pt-4"></div>
@@ -26,7 +27,9 @@
 	<div class="pt-12"></div>
 	{#if pageData}
 		<Table.Root>
-			<Table.Caption>Data Keluarga yang terekam pada Sistem Digitalisasi Silsilah</Table.Caption>
+			<Table.Caption
+				>Data Keluarga yang terekam pada Sistem Digitalisasi Silsilah</Table.Caption
+			>
 			<Table.Header>
 				<Table.Row>
 					<Table.Head class="w-[300px]">Property</Table.Head>
@@ -43,7 +46,9 @@
 					<Table.Cell>{pageData.marga_.nama} {keteranganMargaKeluarga}</Table.Cell>
 				</Table.Row>
 				<Table.Row>
-					<Table.Cell class="font-medium">Jumlah Anggota Keluarga (+ Orang Tua)</Table.Cell>
+					<Table.Cell class="font-medium"
+						>Jumlah Anggota Keluarga (+ Orang Tua)</Table.Cell
+					>
 					<Table.Cell>{pageData.anggotaKeluarga.length + 2}</Table.Cell>
 				</Table.Row>
 				<Table.Row>
@@ -80,7 +85,9 @@
 				</Table.Row>
 				<Table.Row>
 					<Table.Cell class="font-medium">Marga Ibu (sebelum menikah)</Table.Cell>
-					<Table.Cell>{pageData.istri_.keluargaAsal?.marga || 'Tidak Ada Data'}</Table.Cell>
+					<Table.Cell
+						>{pageData.istri_.keluargaAsal?.marga || 'Tidak Ada Data'}</Table.Cell
+					>
 				</Table.Row>
 				<Table.Row>
 					<Table.Cell class="font-medium">Menikah pada</Table.Cell>

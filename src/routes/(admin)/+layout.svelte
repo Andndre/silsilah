@@ -44,10 +44,7 @@
 	]}
 >
 	{#key data.url}
-		<div
-			in:fly={{ y: 100, duration: 300, delay: 300 }}
-			out:fly={{ duration: 300 }}
-		>
+		<div in:fly={{ y: 100, duration: 300, delay: 300 }} out:fly={{ duration: 300 }}>
 			<slot />
 		</div>
 	{/key}

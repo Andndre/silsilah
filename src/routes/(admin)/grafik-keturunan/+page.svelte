@@ -5,7 +5,7 @@
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { drawChildNode, drawParentNode, scatterDots } from './rendering';
-	
+
 	let screenWidth = 0;
 	let screenHeight = 0;
 	let canvasWidth = 0;
@@ -46,9 +46,13 @@
 		render = ({ context, width, height }) => {
 			context.clearRect(0, 0, width, height);
 
-			scatterDots({
-				width, height
-			}, context);
+			scatterDots(
+				{
+					width,
+					height,
+				},
+				context,
+			);
 
 			context.setTransform(zoom, 0, 0, zoom, position.x, position.y);
 
@@ -60,16 +64,21 @@
 			// 	y: 0
 			// }, context, !isPanning);
 
-			drawParentNode({
-				namaAyah: 'test',
-				birthDateAyah: 'test',
-				birthDateIbu: 'test',
-				namaIbu: 'test',
-				photoAyah: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
-				photoIbu: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
-				x: 0,
-				y: 0
-			}, context, !isPanning);
+			drawParentNode(
+				{
+					namaAyah: 'test',
+					birthDateAyah: 'test',
+					birthDateIbu: 'test',
+					namaIbu: 'test',
+					photoAyah:
+						'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+					photoIbu: 'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg',
+					x: 0,
+					y: 0,
+				},
+				context,
+				!isPanning,
+			);
 		};
 	}
 
@@ -82,13 +91,13 @@
 			canvas.style.cursor = 'grab';
 		}
 	}
-	
+
 	function onMouseMove(event: MouseEvent) {
 		if (isPanning) {
 			// Get the mouse movement
 			const movementX = event.clientX - lastMousePosition.x;
 			const movementY = event.clientY - lastMousePosition.y;
-			
+
 			// Update the position based on the mouse movement
 			position.x += movementX;
 			position.y += movementY;
@@ -96,7 +105,6 @@
 
 		lastMousePosition.x = event.clientX;
 		lastMousePosition.y = event.clientY;
-		
 	}
 
 	function onMouseUp(event: MouseEvent) {
@@ -109,18 +117,17 @@
 
 	function onWheel(event: WheelEvent) {
 		const zoomFactor = 1.1;
-    const wheelDelta = event.deltaY;
+		const wheelDelta = event.deltaY;
 
 		if (wheelDelta > 0) {
-				zoom /= zoomFactor;
+			zoom /= zoomFactor;
 		} else {
-				zoom *= zoomFactor;
+			zoom *= zoomFactor;
 		}
 
-    // Prevent the default behavior of the wheel event
-    event.preventDefault();
+		// Prevent the default behavior of the wheel event
+		event.preventDefault();
 	}
-
 </script>
 
 <svelte:window bind:innerWidth={screenWidth} bind:innerHeight={screenHeight} />
@@ -137,8 +144,11 @@
 	>
 		<Layer {render} />
 	</Canvas>
-	<Button on:click={() => {
-		position = { x: canvasWidth / 2, y: canvasHeight / 2 };
-		zoom = 1;
-	}} class="absolute right-5 bottom-5">Reset zoom</Button>
+	<Button
+		on:click={() => {
+			position = { x: canvasWidth / 2, y: canvasHeight / 2 };
+			zoom = 1;
+		}}
+		class="absolute right-5 bottom-5">Reset zoom</Button
+	>
 </div>

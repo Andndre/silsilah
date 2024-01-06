@@ -23,7 +23,7 @@ export async function GET({ request, locals }) {
 			{ status: 400 },
 		);
 	}
-	
+
 	const newRefKey = v4();
 
 	await db

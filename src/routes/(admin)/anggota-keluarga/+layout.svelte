@@ -3,5 +3,5 @@
 </script>
 
 <Maxw>
-	<slot></slot>
+	<slot />
 </Maxw>
