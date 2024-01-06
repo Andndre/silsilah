@@ -143,7 +143,7 @@
 
 </script>
 
-<div id="grafik-container" class="relative grid items-center p-10 max-h-[calc(100vh-120px)] lg:max-w-[calc(100vw-260px)] max-w-[calc(100vw-10px)] overflow-x-scroll">
+<div id="grafik-container" class="relative grid items-center p-10 max-h-[calc(100vh-120px)] lg:max-w-[calc(100vw-260px)] max-w-[calc(100vw-10px)] overflow-x-scroll bg-white" style="background-image: radial-gradient(rgb(200,200,200) 2px, transparent 0); background-position: -19px -19px; background-size: 40px 40px;">
 	<div id="all-element" >
 		<Node schema={familyTreeData} />
 		<Connections />
