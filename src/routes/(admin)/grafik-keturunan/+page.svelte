@@ -1,8 +1,20 @@
 <script lang="ts">
+	import * as Card from '$lib/components/ui/card';
+	import * as Select from '$lib/components/ui/select';
+
 	import type { FamilyTreeSchema } from '$lib/types';
 	import { onMount } from 'svelte';
-	import Node from './Node.svelte';
+	import { onMountHandler } from './onmount';
+	import { Label } from '$lib/components/ui/label';
+	import { Button } from '$lib/components/ui/button';
+	import { ChevronsLeft } from 'lucide-svelte'
+	import { cn } from '$lib/utils';
+	import { fly } from 'svelte/transition';
+	import { quadInOut } from 'svelte/easing';
 
+	import Node from './Node.svelte';
+	import html2canvas from 'html2canvas';
+	
 	const familyTreeData: FamilyTreeSchema = {
 		type: 'parent',
 		namaAyah: "John Doe",
@@ -63,66 +75,85 @@
 		],
 	};
 
-	onMount(() => {
-		let pos = { top: 0, left: 0, x: 0, y: 0 };
-		let zoom = 1;
-		const ZOOM_SPEED = 0.1;
-		const container = document.getElementById('grafik-container') as HTMLDivElement;
-		const allElementContainer = document.getElementById('all-element') as HTMLDivElement;
-		
-		const mouseDownHandler = function(e: MouseEvent) {
-			if(e.button === 1) {
-				e.preventDefault();
-			}
-			container.style.cursor = 'grabbing';
-			container.style.userSelect = 'none';
-			pos = {
-        left: container.scrollLeft,
-        top: container.scrollTop,
-        x: e.clientX,
-        y: e.clientY,
-			};
+	const options = [
+		{
+			value: 'keluarga_ini',
+			label: 'Keluarga ini Saja'
+		},
+		{
+			value: 'leluhur',
+			label: 'Leluhur keluarga ini'
+		},
+		{
+			value: 'lengkap',
+			label: 'Lengkap'
+		},
+	]
 
-			document.addEventListener('mousemove', mouseMoveHandler);
-			document.addEventListener('mouseup', mouseUpHandler);
-		};
-		const mouseMoveHandler = function (e: MouseEvent) {
-			const dx = e.clientX - pos.x;
-			const dy = e.clientY - pos.y;
+	let openOption = false;
 
-			container.scrollTop = pos.top - dy;
-			container.scrollLeft = pos.left - dx;
-		};
-		const mouseUpHandler = function () {
-			container.style.removeProperty('user-select');
-			document.removeEventListener('mousemove', mouseMoveHandler);
-			document.removeEventListener('mouseup', mouseUpHandler);
-			container.style.cursor = 'grab';
-		};
-		const mouseWheelHandler = (e: WheelEvent) => {
-			e.preventDefault();
-			if (!e.ctrlKey) return;
-			const mouseX = e.clientX - container.getBoundingClientRect().left;
-			const mouseY = e.clientY - container.getBoundingClientRect().top;
-			if (e.deltaY > 0) {
-				zoom -= ZOOM_SPEED;
-			} else {
-				zoom += ZOOM_SPEED;
-			}
-			allElementContainer.style.transform = `scale(${zoom})`;
-			allElementContainer.style.transformOrigin = `${mouseX}px ${mouseY}px`;
-		};
-		
-		container.addEventListener('mousedown', mouseDownHandler);
-		container.addEventListener('wheel', mouseWheelHandler);
-	});
+	function saveImage() {
+		const element = document.getElementById('all-element') as HTMLDivElement;
+		html2canvas(element, {
+			logging: true
+		}).then(canvas => {
+			let myImage = canvas.toDataURL();
+			downloadURI(myImage, "MaSimulation.png");
+		})
+	}
 
+	function downloadURI(uri: string, name: string) {
+    let link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    document.body.appendChild(link);
+    link.click();
+	}
+
+	onMount(onMountHandler);
 </script>
 
-<div id="grafik-container" class="relative grid items-center p-10 max-h-[calc(100vh-120px)] lg:max-w-[calc(100vw-260px)] max-w-[calc(100vw-10px)] overflow-x-scroll bg-white" style="background-image: radial-gradient(rgb(200,200,200) 2px, transparent 0); background-position: -19px -19px; background-size: 40px 40px;">
-	<div id="all-element" >
-		<Node schema={familyTreeData} />
-		<!-- <Connections schema={familyTreeData}/> -->
+<div class="relative">
+	<div id="grafik-container" class="relative grid items-center p-10 max-h-[calc(100vh-120px)] lg:max-w-[calc(100vw-260px)] max-w-[calc(100vw-10px)] overflow-x-scroll bg-white" style="background-image: radial-gradient(rgb(200,200,200) 2px, transparent 0); background-position: -19px -19px; background-size: 40px 40px;">
+		<div id="all-element">
+			<Node class="select-none" schema={familyTreeData} />
+		</div>
+	</div>
+	<div class="absolute top-5 left-5 flex gap-2">
+		{#if openOption}
+			<div transition:fly={{ duration: 400, x: -200, easing: quadInOut }}>
+				<Card.Root class="w-[280px]">
+					<Card.Header>
+						<Card.Title>Opsi cetak</Card.Title>
+						<Card.Description>Pilih bagaimana gambar akan dihasilkan.</Card.Description>
+					</Card.Header>
+					<Card.Content>
+						<form>
+							<div class="grid w-full items-center gap-4">
+								<div class="flex flex-col space-y-1.5">
+									<Label for="opsi">Opsi</Label>
+									<Select.Root selected={options[0]}>
+										<Select.Trigger id="opsi">
+											<Select.Value placeholder="Select" />
+										</Select.Trigger>
+										<Select.Content>
+											{#each options as op}
+												<Select.Item value={op.value} label={op.label}
+													>{op.label}</Select.Item
+												>
+											{/each}
+										</Select.Content>
+									</Select.Root>
+								</div>
+							</div>
+						</form>
+					</Card.Content>
+					<Card.Footer class="flex justify-between">
+						<Button on:click={saveImage} variant="default">Cetak PNG</Button>
+					</Card.Footer>
+				</Card.Root>
+			</div>
+		{/if}
+		<Button variant="outline" class="w-12 h-12" on:click={() =>{ openOption = !openOption }}><ChevronsLeft class={cn("w-4 h-4 transition-transform duration-300", openOption || "rotate-180")}/></Button>
 	</div>
 </div>
-

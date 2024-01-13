@@ -103,3 +103,10 @@ export type FamilyTreeSchema = {
 	children: (Child | FamilyTreeSchema)[],
 	id: string,
 }
+
+// thanks chatgpt :)
+export type RecursiveTrue<T> = {
+  [K in keyof T]: T[K] extends Record<string, any>
+    ? (T[K] extends Date ? true : RecursiveTrue<T[K]>)
+    : true;
+};
