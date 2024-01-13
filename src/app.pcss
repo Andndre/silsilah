@@ -79,7 +79,9 @@
 	background: #555;
 }
 
-.connector-top { position: relative; }
+.connector-top {
+	position: relative;
+}
 .connector-top::before {
 	content: '';
 	position: absolute;
@@ -89,7 +91,9 @@
 	background-color: #000;
 	transform: translate(calc(50% - 2px)) rotate(45deg);
 }
-.connector-top-child { position: relative; }
+.connector-top-child {
+	position: relative;
+}
 .connector-top-child::before {
 	content: '';
 	position: absolute;
@@ -101,16 +105,18 @@
 	transform: translateX(calc(-50% + 1px)) rotate(45deg);
 }
 /* Parents node handle */
-.connector-bottom { position: relative; }
+.connector-bottom {
+	position: relative;
+}
 .connector-bottom::after {
-  content: '';
-  position: absolute;
-  bottom: -9px;
-  width: 14px;
-  height: 14px;
+	content: '';
+	position: absolute;
+	bottom: -9px;
+	width: 14px;
+	height: 14px;
 	left: 50%;
-  background-color: #000;
-  transform: translate(-50%, -1px) rotate(45deg);
+	background-color: #000;
+	transform: translate(-50%, -1px) rotate(45deg);
 }
 .connector-bottom div.contents.connector-line-bottom::after {
 	content: '';
@@ -118,10 +124,12 @@
 	left: calc(50% - 1px);
 	height: 50px;
 	border-left: 2px black solid;
-	transform: translate(0,-50%);
+	transform: translate(0, -50%);
 	bottom: -73px;
 }
-.node ul li { position: relative; }
+.node ul li {
+	position: relative;
+}
 .node ul li::before {
 	content: '';
 	display: block;
@@ -148,5 +156,5 @@
 	top: -20px;
 	height: 30px;
 	border-left: 2px black solid;
-	transform: translate(0,-50%);
+	transform: translate(0, -50%);
 }

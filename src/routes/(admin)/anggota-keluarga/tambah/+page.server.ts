@@ -23,7 +23,7 @@ export const actions: Actions = {
 				form,
 			});
 		}
-		
+
 		const user = event.locals.user!;
 		let error = '';
 

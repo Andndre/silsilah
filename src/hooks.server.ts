@@ -1,5 +1,4 @@
 import { getAuthUser } from '$lib/server/account';
-import type { Cookies } from '@sveltejs/kit';
 
 /**
  * Handles the incoming request and sets the authenticated user in the event's locals.

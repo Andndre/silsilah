@@ -1,19 +1,24 @@
-import { keluarga, type Anggota } from '$lib/schema.js';
+import { type Anggota, keluarga } from '$lib/schema.js';
 import { db } from '$lib/server/database.js';
 import { unauthorized } from '$lib/server/responses.js';
 import type { RecursiveTrue } from '$lib/types';
 import { eq } from 'drizzle-orm';
 
-export type Child = Omit<Anggota, "agama"> & ({ status: "BM", jenisKelamin: "L" } | { status: "M", jenisKelamin: "P" } | { status: "BM", jenisKelamin: "P" });
+export type Child = Omit<Anggota, 'agama'> &
+	(
+		| { status: 'BM'; jenisKelamin: 'L' }
+		| { status: 'M'; jenisKelamin: 'P' }
+		| { status: 'BM'; jenisKelamin: 'P' }
+	);
 
-export type Parent = Omit<Anggota, "agama"|"jenisKelamin"|"status">;
+export type Parent = Omit<Anggota, 'agama' | 'jenisKelamin' | 'status'>;
 
 export type FamilyTreeSchema = {
-	ayah: Parent,
-	ibu: Parent,
-	id: number,
-	anakAnak: (Child | FamilyTreeSchema | {})[]
-}
+	ayah: Parent;
+	ibu: Parent;
+	id: number;
+	anakAnak: (Child | FamilyTreeSchema | {})[];
+};
 
 export const GET = async ({ locals }) => {
 	if (!locals.user) {
@@ -23,7 +28,10 @@ export const GET = async ({ locals }) => {
 	const user = locals.user;
 	const res = await db.transaction(async (tx) => {
 		const schema: FamilyTreeSchema | {} = {};
-		async function recursive(idAkun: number, result: FamilyTreeSchema): Promise<FamilyTreeSchema> {
+		async function recursive(
+			idAkun: number,
+			result: FamilyTreeSchema,
+		): Promise<FamilyTreeSchema> {
 			const query = await tx.query.keluarga.findFirst({
 				where: () => eq(keluarga.id, idAkun),
 				columns: {
@@ -40,8 +48,8 @@ export const GET = async ({ locals }) => {
 							refKey: true,
 							gambar: true,
 							tempatLahir: true,
-							keluargaAsal: true
-						} satisfies RecursiveTrue<Parent>
+							keluargaAsal: true,
+						} satisfies RecursiveTrue<Parent>,
 					},
 					istri_: {
 						columns: {
@@ -52,24 +60,24 @@ export const GET = async ({ locals }) => {
 							refKey: true,
 							gambar: true,
 							tempatLahir: true,
-							keluargaAsal: true
-						} satisfies RecursiveTrue<Parent>
+							keluargaAsal: true,
+						} satisfies RecursiveTrue<Parent>,
 					},
 					anggotaKeluarga: {
 						columns: {
-							id: true, 
+							id: true,
 							status: true,
 							jenisKelamin: true,
-							refKey: true, 
-							nama: true, 
-							tempatLahir: true, 
+							refKey: true,
+							nama: true,
+							tempatLahir: true,
 							tanggalLahir: true,
-							tanggalMeninggal: true, 
-							keluargaAsal: true, 
+							tanggalMeninggal: true,
+							keluargaAsal: true,
 							gambar: true,
-						} satisfies RecursiveTrue<Child>
-					}
-				}
+						} satisfies RecursiveTrue<Child>,
+					},
+				},
 			});
 			if (!query) return result;
 			result.ayah = query.suami_;
@@ -84,13 +92,16 @@ export const GET = async ({ locals }) => {
 					const queryAsalKeluarga = await tx.query.keluarga.findFirst({
 						where: () => eq(keluarga.suami, anak.id),
 						columns: {
-							id: true
-						}
+							id: true,
+						},
 					});
 					if (!queryAsalKeluarga) return result;
 					const { id: idKeluarga } = queryAsalKeluarga;
 					result.anakAnak[i] = {};
-					result.anakAnak[i] = await recursive(idKeluarga, result.anakAnak[i] as FamilyTreeSchema)
+					result.anakAnak[i] = await recursive(
+						idKeluarga,
+						result.anakAnak[i] as FamilyTreeSchema,
+					);
 				}
 			}
 			return result;

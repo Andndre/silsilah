@@ -85,28 +85,30 @@ export type Circle = Coords & {
 };
 
 export type Child = {
-	type: 'child',
-	nama: string,
-	tahunLahir: string,
-	foto: string,
-	id: string,
-}
+	type: 'child';
+	nama: string;
+	tahunLahir: string;
+	foto: string;
+	id: string;
+};
 
 export type FamilyTreeSchema = {
-	type: 'parent',
-	namaAyah: string,
-	namaIbu: string,
-	tahunLahirAyah: string,
-	tahunLahirIbu: string,
-	fotoAyah: string,
-	fotoIbu: string,
-	children: (Child | FamilyTreeSchema)[],
-	id: string,
-}
+	type: 'parent';
+	namaAyah: string;
+	namaIbu: string;
+	tahunLahirAyah: string;
+	tahunLahirIbu: string;
+	fotoAyah: string;
+	fotoIbu: string;
+	children: (Child | FamilyTreeSchema)[];
+	id: string;
+};
 
 // thanks chatgpt :)
 export type RecursiveTrue<T> = {
-  [K in keyof T]: T[K] extends Record<string, any>
-    ? (T[K] extends Date ? true : RecursiveTrue<T[K]>)
-    : true;
+	[K in keyof T]: T[K] extends Record<string, any>
+		? T[K] extends Date
+			? true
+			: RecursiveTrue<T[K]>
+		: true;
 };

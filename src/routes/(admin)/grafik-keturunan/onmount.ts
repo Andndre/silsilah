@@ -1,4 +1,4 @@
-import { browser } from "$app/environment";
+import { browser } from '$app/environment';
 
 export const onMountHandler = () => {
 	if (!browser) return;
@@ -7,9 +7,9 @@ export const onMountHandler = () => {
 	const ZOOM_SPEED = 0.1;
 	const container = document.getElementById('grafik-container') as HTMLDivElement;
 	const allElementContainer = document.getElementById('all-element') as HTMLDivElement;
-	
-	const mouseDownHandler = function(e: MouseEvent) {
-		if(e.button === 1) {
+
+	const mouseDownHandler = function (e: MouseEvent) {
+		if (e.button === 1) {
 			e.preventDefault();
 		}
 		container.style.cursor = 'grabbing';
@@ -50,7 +50,7 @@ export const onMountHandler = () => {
 		allElementContainer.style.transform = `scale(${zoom})`;
 		allElementContainer.style.transformOrigin = `${mouseX}px ${mouseY}px`;
 	};
-	
+
 	container.addEventListener('mousedown', mouseDownHandler);
 	container.addEventListener('wheel', mouseWheelHandler);
-}
+};
