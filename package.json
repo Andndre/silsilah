@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.4.3",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@trivago/prettier-plugin-sort-imports": "^4.3.0",
 		"@types/bcrypt": "^5.0.2",
